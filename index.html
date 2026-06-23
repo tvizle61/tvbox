@@ -2039,61 +2039,7 @@ document.addEventListener('DOMContentLoaded',()=>{ setTimeout(applyAd,500); });
 
 
 // ════════════════════════════════════════
-// SON İZLENENLER
-// ════════════════════════════════════════
-function addRecent(ch){
-  recentCh=recentCh.filter(c=>c.id!==ch.id);
-  recentCh.unshift({id:ch.id,name:ch.name,grp:ch.grp,logo:ch.logo,url:ch.url});
-  if(recentCh.length>10) recentCh.pop();
-  lss('vg_recent',JSON.stringify(recentCh));
-  renderRecentBar();
-}
-function renderRecentBar(){
-  const bar=document.getElementById('recentBar');
-  const chips=document.getElementById('recentChips');
-  if(!bar||!chips) return;
-  if(!recentCh.length){ bar.style.display='none'; return; }
-  bar.style.display='flex'; chips.innerHTML='';
-  recentCh.slice(0,8).forEach(ch=>{
-    const d=document.createElement('div'); d.className='recent-chip';
-    const em=grpEmoji(ch.grp);
-    d.innerHTML='<span style="font-size:13px">'+em+'</span><span class="recent-chip-name">'+ch.name+'</span>';
-    d.onclick=()=>goChannel(ch);
-    chips.appendChild(d);
-  });
-}
 
-// ════════════════════════════════════════
-// ARAMA GEÇMİŞİ
-// ════════════════════════════════════════
-function addSearchHist(q){
-  if(!q||q.length<2) return;
-  searchHist=searchHist.filter(s=>s!==q);
-  searchHist.unshift(q);
-  if(searchHist.length>8) searchHist.pop();
-  lss('vg_shist',JSON.stringify(searchHist));
-}
-function showSearchHist(){
-  const q=(document.getElementById('sbSearch').value||'').trim();
-  const el=document.getElementById('searchHist'); if(!el) return;
-  const items=q?searchHist.filter(s=>s.toLowerCase().includes(q.toLowerCase())):searchHist;
-  if(!items.length){ el.classList.remove('on'); return; }
-  el.innerHTML='';
-  items.forEach(s=>{
-    const d=document.createElement('div'); d.className='sh-item';
-    d.innerHTML='🕐 '+s;
-    d.onclick=()=>{ document.getElementById('sbSearch').value=s; debRender(); hideSearchHist(); };
-    el.appendChild(d);
-  });
-  if(searchHist.length){
-    const clr=document.createElement('button'); clr.className='sh-clear';
-    clr.textContent='Geçmişi Temizle';
-    clr.onclick=()=>{ searchHist=[]; lss('vg_shist','[]'); hideSearchHist(); };
-    el.appendChild(clr);
-  }
-  el.classList.add('on');
-}
-function hideSearchHist(){ const el=document.getElementById('searchHist'); if(el) el.classList.remove('on'); }
 
 // ════════════════════════════════════════
 // SCREENSHOT
