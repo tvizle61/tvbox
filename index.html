@@ -9,6 +9,78 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mpegts.js/1.7.3/mpegts.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* ========================================================
+   GÖRSEL DÜZENLEMELER (VİDEO ALTI KATEGORİLER & BEYAZ YAZILAR)
+   ======================================================== */
+
+/* 1. KATEGORİ BUTONLARININ YENİ STİLİ */
+.sb-cats button, .sb-cats .cat-btn {
+    background: #1e1e24 !important; /* Buton içi koyu gri / siyah */
+    color: #ffffff !important;      /* Yazı rengi saf beyaz */
+    border: 1px solid #2a2a35 !important;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+/* Kategori butonlarının üzerine gelince (Hover) */
+.sb-cats button:hover, .sb-cats .cat-btn:hover {
+    background: #2a2a35 !important;
+    color: #ffffff !important;
+}
+
+/* Aktif / Seçili olan kategori butonunun rengi */
+.sb-cats button.on, .sb-cats .cat-btn.active, .sb-cats button.active {
+    background: #00bcd4 !important; /* Seçilen buton turkuaz olur */
+    color: #ffffff !important;
+    border-color: #00bcd4 !important;
+}
+
+
+/* 2. ADMİN PANELİ OKUNABİLİRLİK GELİŞTİRMELERİ */
+
+/* Form alanlarının üzerindeki "Kanal Adı", "Grup" gibi etiketler */
+.admin-add-form .fg label, 
+.fg label {
+    color: #ffffff !important;      /* Silik gri yerine net beyaz */
+    font-weight: 600;               /* Daha kalın ve belirgin */
+    opacity: 1 !important;          /* Varsa şeffaflığı sıfırlar */
+    margin-bottom: 6px;
+    display: inline-block;
+}
+
+/* "Yeni Kanal Ekle", "Kanal Listesi" gibi ana başlıklar */
+.sec-title {
+    color: #ffffff !important;      /* Net beyaz */
+    font-weight: 700;               /* Kalın */
+    border-left: 3px solid #00bcd4; /* Sol tarafa şık turkuaz çizgi */
+    padding-left: 8px;
+    margin-top: 20px;
+    margin-bottom: 12px;
+}
+
+/* Kanal listesi tablosunun başlık şeridi (#, Kanal, URL, Grup) */
+.ch-table-head div {
+    color: #ffffff !important;      /* Başlık yazılarını beyaz yapar */
+    font-weight: 600;
+    opacity: 1 !important;
+}
+
+/* İstatistik kartlarının altındaki açıklamalar (Toplam Kanal, Favori vb.) */
+.stat-lbl {
+    color: #dddddd !important;      /* Okunabilir açık gri/beyaz */
+    opacity: 0.9 !important;
+}
+
+/* Giriş kutularının içindeki silik örnek yazılar (Placeholder) */
+.admin-add-form input::placeholder {
+    color: #aaaaaa !important;      /* İçerideki ipucu yazılarını belirginleştirir */
+    opacity: 1;
+}
   /* KATEGORİ BUTONLARI YENİ STİLİ */
 .sb-cats button, .sb-cats .cat-btn {
     background: #1e1e24 !important; /* Buton içi koyu gri/siyah */
