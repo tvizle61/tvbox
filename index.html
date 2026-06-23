@@ -9,6 +9,32 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mpegts.js/1.7.3/mpegts.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* KATEGORİ BUTONLARI YENİ STİLİ */
+.sb-cats button, .sb-cats .cat-btn {
+    background: #1e1e24 !important; /* Buton içi koyu gri/siyah */
+    color: #ffffff !important;      /* Yazı rengi beyaz */
+    border: 1px solid #2a2a35 !important;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+/* Fareyle üzerine gelindiğinde */
+.sb-cats button:hover, .sb-cats .cat-btn:hover {
+    background: #2a2a35 !important;
+    color: #ffffff !important;
+}
+
+/* Aktif/Seçili olan kategori butonu */
+.sb-cats button.on, .sb-cats .cat-btn.active, .sb-cats button.active {
+    background: #00bcd4 !important; /* Seçili buton rengi (Turkuaz) */
+    color: #ffffff !important;
+    border-color: #00bcd4 !important;
+}
 :root{
   --bg:#07090e; --s1:#0b1018; --s2:#0f1520; --s3:#141c2a; --s4:#1a2335;
   --bd:#1d2333; --bd2:#263444;
@@ -738,7 +764,7 @@ input,select{font-family:var(--fb);}
         </div>
       </div>
       
-      <div class="sb-cats" id="sbCats" style="padding: 10px; display: flex; gap: 5px; overflow-x: auto; white-space: nowrap; background: rgba(0,0,0,0.2);"></div>
+      <div class="sb-cats" id="sbCats" style="padding: 12px 10px; display: flex; gap: 8px; overflow-x: auto; white-space: nowrap; background: #111116; border-bottom: 1px solid rgba(255,255,255,0.05);"></div>
       
       <div class="ad-leader" id="adLeader" onclick="adLeaderClick()">
         <span class="ad-tag">REKLAM</span>
