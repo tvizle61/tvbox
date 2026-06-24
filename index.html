@@ -741,7 +741,15 @@ input,select{font-family:var(--fb);}
             </div>
           </div>
         </div>
-       
+        <!-- SON İZLENENLER -->
+        <div class="recent-bar" id="recentBar" style="display:none">
+          <span class="recent-lbl">🕐 SON İZLENENLER</span>
+          <div id="recentChips" style="display:flex;gap:6px"></div>
+        </div>
+        <div class="epg-bar" id="epgBar">
+          <span class="epg-lbl">📅 YAYIN AKIŞI</span>
+          <div id="epgSlots" style="display:flex;gap:6px"></div>
+        </div>
         <!-- LEADERBOARD REKLAM -->
         <div class="ad-leader" id="adLeader" onclick="adLeaderClick()">
           <span class="ad-tag">REKLAM</span>
@@ -2031,32 +2039,30 @@ document.addEventListener('DOMContentLoaded',()=>{ setTimeout(applyAd,500); });
 
 
 // ════════════════════════════════════════
-// SON İZLENENLER
-// ════════════════════════════════════════
-function addRecent(ch){
-  recentCh=recentCh.filter(c=>c.id!==ch.id);
-  recentCh.unshift({id:ch.id,name:ch.name,grp:ch.grp,logo:ch.logo,url:ch.url});
-  if(recentCh.length>10) recentCh.pop();
-  lss('vg_recent',JSON.stringify(recentCh));
-  renderRecentBar();
-}
-function renderRecentBar(){
-  const bar=document.getElementById('recentBar');
-  const chips=document.getElementById('recentChips');
-  if(!bar||!chips) return;
-  if(!recentCh.length){ bar.style.display='none'; return; }
-  bar.style.display='flex'; chips.innerHTML='';
-  recentCh.slice(0,8).forEach(ch=>{
-    const d=document.createElement('div'); d.className='recent-chip';
-    const em=grpEmoji(ch.grp);
-    d.innerHTML='<span style="font-size:13px">'+em+'</span><span class="recent-chip-name">'+ch.name+'</span>';
-    d.onclick=()=>goChannel(ch);
-    chips.appendChild(d);
-  });
-}
 
 // ════════════════════════════════════════
 
+
+// ════════════════════════════════════════
+// SCREENSHOT
+// ════════════════════════════════════════
+function takeScreenshot(){
+  const vd=document.getElementById('mainVid');
+  if(!vd||!vd.videoWidth){ toast('Video yok','⚠️'); return; }
+  try{
+    const cv=document.createElement('canvas');
+    cv.width=vd.videoWidth; cv.height=vd.videoHeight;
+    cv.getContext('2d').drawImage(vd,0,0);
+    const a=document.createElement('a');
+    a.href=cv.toDataURL('image/png');
+    a.download=(curCh?curCh.name:'ekran')+'_'+new Date().toISOString().slice(0,19).replace(/:/g,'-')+'.png';
+    a.click();
+    // flash efekti
+    const fl=document.getElementById('screenshotFlash');
+    if(fl){ fl.style.opacity='.6'; setTimeout(()=>fl.style.opacity='0',150); }
+    toast('📸 Ekran görüntüsü kaydedildi','📸');
+  }catch(e){ toast('Ekran görüntüsü alınamadı (CORS)','⚠️'); }
+}
 
 // ════════════════════════════════════════
 // SWIPE (dokunmatik kanal geçişi)
