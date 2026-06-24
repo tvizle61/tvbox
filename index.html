@@ -706,58 +706,49 @@ input,select{font-family:var(--fb);}
                   <div class="p-ch-title" id="pTitle">—</div>
                   <div style="font-size:11px;color:rgba(255,255,255,.45)" id="pGrp"></div>
                 </div>
-             </div>
-       </div>
-     </div>
-      </div> 
-
-        <div class="p-ov-bot" style="width: 100%; max-width: 100%; margin-top: 0; padding-top: 0;">
-          <div class="p-prog" style="margin-bottom: 4px;"><div class="p-prog-fill"></div></div>
-          
-          <div class="p-ctrls" style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; width: 100%; height: 36px; box-sizing: border-box; padding: 0 10px;">
-            
-           
-            
-            <button class="pcb" onclick="restartStream()" title="Yenile" style="width: 16px; height: 16px; min-width: 16px; padding: 0; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:100%; height:100%;"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg>
-            </button>
-            
-            
-            
-           <button class="pcb" onclick="doFS()" title="Tam Ekran" id="fsBtn" style="width: 16px; height: 16px; min-width: 16px; padding: 0; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; margin-right: 4px;">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:100%; height:100%;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-</button>
-
-            <button onclick="openModal('addChModal')" title="Kanal Ekle" style="background: rgba(0, 136, 255, 0.2); border: 1px solid #0088ff; color: #0088ff; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 2px; height: 20px;">
-              + KANAL
-            </button>
-
-            <button onclick="openModal('m3uModal')" title="M3U Yükle" style="background: rgba(40, 167, 69, 0.2); border: 1px solid #28a745; color: #28a745; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 2px; height: 20px;">
-              M3U
-            </button>
-            <button class="p-play-btn" onclick="togglePlay()" id="playBtn" style="margin-left: 8px; display: flex; align-items: center;">
-              <svg viewBox="0 0 24 24" fill="currentColor" style="width: 16px; height: 16px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </button>
-            
-            <div class="vol-wrap" style="display: flex; align-items: center; gap: 4px;">
-              <button onclick="toggleMute()" style="background:none; border:none; color:white; cursor:pointer;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px; height:14px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
-              <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setVol(this.value)" style="width: 60px;">
-              <span class="vol-pct" id="volPct" style="font-size: 11px; color: white;">100%</span>
-            </div>
-            
-            <div class="p-qual-wrap" style="position: relative;">
-              <button class="p-qual-btn" style="background:none; border:none; color:white; cursor:pointer; display:flex; align-items:center; gap:4px; font-size:11px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px; height:14px;"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><span id="qualLabel">OTO</span></button>
-              <div class="p-qual-drop">
-                <button class="p-qual-item on" onclick="setQual(-1)">Otomatik</button>
-                <button class="p-qual-item" onclick="setQual(1080)">1080p HD</button>
-                <button class="p-qual-item" onclick="setQual(720)">720p HD</button>
-                <button class="p-qual-item" onclick="setQual(480)">480p</button>
-                <button class="p-qual-item" onclick="setQual(360)">360p</button>
+              </div>
+              <div class="p-top-btns">
+                <button class="pcb" onclick="takeScreenshot()" title="Ekran Görüntüsü"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></button>
+                <button class="pcb" onclick="restartStream()" title="Yenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg></button>
+                <button class="pcb" onclick="doPiP()" title="PiP"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="14" y="10" width="8" height="7" rx="1"/></svg></button>
+                <button class="pcb" onclick="doFS()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
               </div>
             </div>
-            
-            <div class="p-spc" style="flex: 1;"></div>
+            <div class="p-ov-bot">
+              <div class="p-prog"><div class="p-prog-fill"></div></div>
+              <div class="p-ctrls">
+                <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </button>
+                <div class="vol-wrap">
+                  <button onclick="toggleMute()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+                  <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setVol(this.value)">
+                  <span class="vol-pct" id="volPct">100%</span>
+                </div>
+                <div class="p-qual-wrap">
+                  <button class="p-qual-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><span id="qualLabel">OTO</span></button>
+                  <div class="p-qual-drop">
+                    <button class="p-qual-item on" onclick="setQual(-1)">Otomatik</button>
+                    <button class="p-qual-item" onclick="setQual(1080)">1080p HD</button>
+                    <button class="p-qual-item" onclick="setQual(720)">720p HD</button>
+                    <button class="p-qual-item" onclick="setQual(480)">480p</button>
+                    <button class="p-qual-item" onclick="setQual(360)">360p</button>
+                  </div>
+                </div>
+                <div class="p-spc"></div>
+                <span class="p-time" id="pTime">🔴 CANLI</span>
+              </div>
+            </div>
           </div>
+        </div>
+        <!-- SON İZLENENLER -->
+        <div class="recent-bar" id="recentBar" style="display:none">
+          <span class="recent-lbl">🕐 SON İZLENENLER</span>
+          <div id="recentChips" style="display:flex;gap:6px"></div>
+        </div>
+        <div class="epg-bar" id="epgBar">
+          <span class="epg-lbl">📅 YAYIN AKIŞI</span>
+          <div id="epgSlots" style="display:flex;gap:6px"></div>
         </div>
         <!-- LEADERBOARD REKLAM -->
         <div class="ad-leader" id="adLeader" onclick="adLeaderClick()">
@@ -768,7 +759,12 @@ input,select{font-family:var(--fb);}
             </div>
           </div>
         </div>
-      
+        <div class="admin-bar" id="adminBar">
+          <input type="text" id="adminUrl" placeholder="Admin — URL gir (m3u8, .ts, http…)" onkeydown="if(event.key==='Enter')adminPlay()">
+          <button class="btn btn-acc" onclick="adminPlay()"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>OYNAT</button>
+          <button class="btn btn-g" onclick="openModal('addChModal')">+ KANAL</button>
+          <button class="btn btn-g" onclick="openModal('m3uModal')">M3U YÜKLE</button>
+        </div>
       </div>
 
       <!-- MOVIES PAGE -->
@@ -801,33 +797,28 @@ input,select{font-family:var(--fb);}
                 <div class="movie-seek-thumb" id="seekThumb"></div>
                 <div id="seekTip" style="position:absolute;bottom:14px;background:rgba(0,0,0,.85);color:#fff;font-size:11px;padding:2px 7px;border-radius:4px;transform:translateX(-50%);display:none;white-space:nowrap;pointer-events:none"></div>
               </div>
-            <div class="movie-ctrls">
-        <button class="pcb" onclick="doPiPMovie()" title="PiP"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="14" y="10" width="8" height="7" rx="1"/></svg></button>
-        <button class="pcb" onclick="doFSMovie()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
-        
-        <button class="pcb" onclick="movieSkip(-10)" title="-10s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg></button>
-        <button class="movie-play-btn" onclick="toggleMoviePlay()" id="moviePlayBtn">
-          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        </button>
-        <button class="pcb" onclick="movieSkip(10)" title="+10s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M5 4l14 8-14 8V4z"/></svg></button>
-        
-        <div class="vol-wrap">
-          <button onclick="toggleMovieMute()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;color:rgba(255,255,255,.6)"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
-          <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setMovieVol(this.value)">
-        </div>
-        
-        <span class="movie-time" id="movieTime">0:00 / 0:00</span>
-        
-        <div style="flex:1"></div>
-        
-        <select class="movie-speed" onchange="setMovieSpeed(this.value)">
-          <option value=".5">0.5×</option><option value=".75">0.75×</option>
-          <option value="1" selected>1×</option><option value="1.25">1.25×</option>
-          <option value="1.5">1.5×</option><option value="2">2×</option>
-        </select>
-      </div>
-    </div>
-  </div>
+              <div class="movie-ctrls">
+                <button class="pcb" onclick="movieSkip(-10)" title="-10s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg></button>
+                <button class="movie-play-btn" onclick="toggleMoviePlay()" id="moviePlayBtn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </button>
+                <button class="pcb" onclick="movieSkip(10)" title="+10s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M5 4l14 8-14 8V4z"/></svg></button>
+                <div class="vol-wrap">
+                  <button onclick="toggleMovieMute()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;color:rgba(255,255,255,.6)"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+                  <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setMovieVol(this.value)">
+                </div>
+                <span class="movie-time" id="movieTime">0:00 / 0:00</span>
+                <div style="flex:1"></div>
+                <select class="movie-speed" onchange="setMovieSpeed(this.value)">
+                  <option value=".5">0.5×</option><option value=".75">0.75×</option>
+                  <option value="1" selected>1×</option><option value="1.25">1.25×</option>
+                  <option value="1.5">1.5×</option><option value="2">2×</option>
+                </select>
+                <button class="pcb" onclick="doPiPMovie()" title="PiP"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="14" y="10" width="8" height="7" rx="1"/></svg></button>
+                <button class="pcb" onclick="doFSMovie()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="movie-lib" id="movieLib">
           <div class="movie-lib-title">
@@ -1131,8 +1122,7 @@ input,select{font-family:var(--fb);}
 <div class="toast" id="toast"><span class="toast-ico" id="toastIco">ℹ️</span><span id="toastMsg"></span></div>
 
 <script>
-  // ════════════════════════════════════════
-
+// ════════════════════════════════════════
 // CONFIG
 // ════════════════════════════════════════
 const PL_URL   = 'https://raw.githubusercontent.com/kadirsener1/avva/refs/heads/main/playlist.m3u';
@@ -1585,10 +1575,65 @@ function playCh(ch){
   document.getElementById('pTitle').textContent=ch.name;
   document.getElementById('pGrp').textContent=ch.grp||'';
   if(isAdmin){ const u=document.getElementById('adminUrl'); if(u) u.value=ch.url; }
-  
   const vd=document.getElementById('mainVid');
-  
- 
+  killAll(); showBuf(true);
+  // Ses hafızası uygula
+  vd.volume=savedVol; document.querySelector('.vol-slider').value=savedVol*100;
+  const vp=document.getElementById('volPct'); if(vp) vp.textContent=Math.round(savedVol*100)+'%';
+  playUrl(vd, ch.url, true);
+  updatePlayBtn();
+  addRecent(ch);
+  renderChannels();
+  renderEpg();
+  setTimeout(scrollToActive,80);
+  toast('📺 '+ch.name,'🔴');
+}
+
+function restartStream(){ if(curCh) playCh(curCh); }
+function togglePlay(){ const v=document.getElementById('mainVid'); v.paused?v.play():v.pause(); updatePlayBtn(); }
+function updatePlayBtn(){
+  const v=document.getElementById('mainVid');
+  setTimeout(()=>{
+    const b=document.getElementById('playBtn'); if(!b) return;
+    b.innerHTML=v.paused
+      ?'<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>'
+      :'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg>';
+  },80);
+}
+function toggleMute(){ const v=document.getElementById('mainVid'); v.muted=!v.muted; }
+function setVol(val){
+  const v=document.getElementById('mainVid'); v.volume=val/100; v.muted=val==0;
+  savedVol=val/100; lss('vg_vol',savedVol);
+  const vp=document.getElementById('volPct'); if(vp) vp.textContent=Math.round(val)+'%';
+}
+function doFS(){ const e=document.getElementById('playerWrap'); if(!document.fullscreenElement) e.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); }
+function doPiP(){ const v=document.getElementById('mainVid'); if(document.pictureInPictureElement) document.exitPictureInPicture().catch(()=>{}); else if(v.readyState) v.requestPictureInPicture().catch(()=>toast('PiP desteklenmiyor','⚠️')); }
+function setQual(q){
+  document.getElementById('qualLabel').textContent=q===-1?'OTO':(q+'p');
+  document.querySelectorAll('.p-qual-item').forEach(b=>b.classList.toggle('on',b.textContent.includes(q===-1?'Otomatik':q+'')));
+  if(hlsInst){ if(q===-1){ hlsInst.currentLevel=-1; } else { const ls=hlsInst.levels; let best=-1; ls.forEach((l,i)=>{ if(l.height<=q&&(best===-1||l.height>ls[best].height)) best=i; }); if(best!==-1) hlsInst.currentLevel=best; } }
+  toast('Kalite: '+(q===-1?'Otomatik':q+'p'),'🎯');
+}
+
+document.getElementById('mainVid').addEventListener('play',updatePlayBtn);
+document.getElementById('mainVid').addEventListener('pause',updatePlayBtn);
+document.getElementById('mainVid').addEventListener('waiting',()=>showBuf(true));
+document.getElementById('mainVid').addEventListener('playing',()=>showBuf(false));
+
+function adminPlay(){
+  if(!isAdmin) return;
+  const url=(document.getElementById('adminUrl').value||'').trim();
+  if(!url){ toast('URL girin','⚠️'); return; }
+  curCh={id:'manual',name:url.split('/').pop().split('?')[0]||'Akış',url,grp:'Manuel',logo:''};
+  document.getElementById('pEmpty').style.display='none';
+  document.getElementById('pTitle').textContent=curCh.name;
+  document.getElementById('pGrp').textContent='Manuel';
+  const vd=document.getElementById('mainVid');
+  killAll(); showBuf(true);
+  playUrl(vd,url,true);
+  updatePlayBtn();
+  toast('▶️ Yükleniyor…','📡');
+}
 
 // ════════════════════════════════════════
 // EPG
@@ -2019,7 +2064,57 @@ function renderRecentBar(){
 }
 
 // ════════════════════════════════════════
+// ARAMA GEÇMİŞİ
+// ════════════════════════════════════════
+function addSearchHist(q){
+  if(!q||q.length<2) return;
+  searchHist=searchHist.filter(s=>s!==q);
+  searchHist.unshift(q);
+  if(searchHist.length>8) searchHist.pop();
+  lss('vg_shist',JSON.stringify(searchHist));
+}
+function showSearchHist(){
+  const q=(document.getElementById('sbSearch').value||'').trim();
+  const el=document.getElementById('searchHist'); if(!el) return;
+  const items=q?searchHist.filter(s=>s.toLowerCase().includes(q.toLowerCase())):searchHist;
+  if(!items.length){ el.classList.remove('on'); return; }
+  el.innerHTML='';
+  items.forEach(s=>{
+    const d=document.createElement('div'); d.className='sh-item';
+    d.innerHTML='🕐 '+s;
+    d.onclick=()=>{ document.getElementById('sbSearch').value=s; debRender(); hideSearchHist(); };
+    el.appendChild(d);
+  });
+  if(searchHist.length){
+    const clr=document.createElement('button'); clr.className='sh-clear';
+    clr.textContent='Geçmişi Temizle';
+    clr.onclick=()=>{ searchHist=[]; lss('vg_shist','[]'); hideSearchHist(); };
+    el.appendChild(clr);
+  }
+  el.classList.add('on');
+}
+function hideSearchHist(){ const el=document.getElementById('searchHist'); if(el) el.classList.remove('on'); }
 
+// ════════════════════════════════════════
+// SCREENSHOT
+// ════════════════════════════════════════
+function takeScreenshot(){
+  const vd=document.getElementById('mainVid');
+  if(!vd||!vd.videoWidth){ toast('Video yok','⚠️'); return; }
+  try{
+    const cv=document.createElement('canvas');
+    cv.width=vd.videoWidth; cv.height=vd.videoHeight;
+    cv.getContext('2d').drawImage(vd,0,0);
+    const a=document.createElement('a');
+    a.href=cv.toDataURL('image/png');
+    a.download=(curCh?curCh.name:'ekran')+'_'+new Date().toISOString().slice(0,19).replace(/:/g,'-')+'.png';
+    a.click();
+    // flash efekti
+    const fl=document.getElementById('screenshotFlash');
+    if(fl){ fl.style.opacity='.6'; setTimeout(()=>fl.style.opacity='0',150); }
+    toast('📸 Ekran görüntüsü kaydedildi','📸');
+  }catch(e){ toast('Ekran görüntüsü alınamadı (CORS)','⚠️'); }
+}
 
 // ════════════════════════════════════════
 // SWIPE (dokunmatik kanal geçişi)
@@ -2336,9 +2431,6 @@ setTimeout(function warn(){
   }catch{}
   setTimeout(warn, 2000);
 }, 1000);
-  
-</body>
-
 </script>
 </body>
 </html>
