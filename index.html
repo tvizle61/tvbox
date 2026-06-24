@@ -724,9 +724,9 @@ input,select{font-family:var(--fb);}
             
             
             
-            <button class="pcb" onclick="doFS()" title="Tam Ekran" style="width: 26px; height: 26px; min-width: 26px; padding: 0; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; margin-right: 4px;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:100%; height:100%;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-            </button>
+           <button class="pcb" onclick="doFS()" title="Tam Ekran" id="fsBtn" style="width: 16px; height: 16px; min-width: 16px; padding: 0; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; margin-right: 4px;">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:100%; height:100%;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+</button>
 
             <button onclick="openModal('addChModal')" title="Kanal Ekle" style="background: rgba(0, 136, 255, 0.2); border: 1px solid #0088ff; color: #0088ff; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 2px; height: 20px;">
               + KANAL
@@ -2463,3 +2463,43 @@ setTimeout(function warn(){
 </script>
 </body>
 </html>
+<script>
+      // Daha önce yazdığımız doFS fonksiyonunun bittiği yer olabilir
+      function doFS(){ 
+        const e=document.getElementById('playerWrap'); 
+        if(!document.fullscreenElement) e.requestFullscreen().catch(()=>{}); 
+        else document.exitFullscreen(); 
+      }
+
+      // ══════════════════════════════════════════════════════════════
+      // YENİ KODU TAM OLARAK BURAYA, DİĞERLERİNİN ALTINA YAPIŞTIRIN:
+      // ══════════════════════════════════════════════════════════════
+      function updateFullscreenBtn() {
+        const fsBtn = document.getElementById('fsBtn');
+        if (!fsBtn) return;
+
+        if (document.fullscreenElement) {
+          fsBtn.title = "Tam Ekrandan Çık";
+          fsBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:100%; height:100%;">
+              <path d="M4 14h6v6m10-6h-6v6M4 10h6V4m10 6h-6V4"/>
+            </svg>
+          `;
+        } else {
+          fsBtn.title = "Tam Ekran";
+          fsBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:100%; height:100%;">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+            </svg>
+          `;
+        }
+      }
+
+      document.addEventListener('fullscreenchange', updateFullscreenBtn);
+      document.addEventListener('webkitfullscreenchange', updateFullscreenBtn);
+      document.addEventListener('mozfullscreenchange', updateFullscreenBtn);
+      document.addEventListener('MSFullscreenChange', updateFullscreenBtn);
+      // ══════════════════════════════════════════════════════════════
+
+    </script>
+</body>
