@@ -1131,6 +1131,63 @@ input,select{font-family:var(--fb);}
 <div class="toast" id="toast"><span class="toast-ico" id="toastIco">ℹ️</span><span id="toastMsg"></span></div>
 
 <script>
+  // ════════════════════════════════════════
+// KONTROL BARINI OTOMATİK GİZLEME SİSTEMİ
+// ════════════════════════════════════════
+document.addEventListener("DOMContentLoaded", () => {
+  const playerWrap = document.getElementById("playerWrap");
+  const ctrlBar = document.querySelector(".p-ov-bot");
+  let hideTimeout;
+
+  if (!playerWrap || !ctrlBar) return;
+
+  // CSS geçiş efektini JavaScript üzerinden garantiliyoruz (Pürüzsüz kaybolma için)
+  ctrlBar.style.transition = "opacity 0.5s ease, visibility 0.5s ease";
+  ctrlBar.style.opacity = "1";
+  ctrlBar.style.visibility = "visible";
+
+  // Barı gizleme fonksiyonu (Sadece video oynatılıyorsa gizler, duraklatılmışken açık kalır)
+  function hideControls() {
+    const vd = document.getElementById("mainVid");
+    if (vd && !vd.paused) {
+      ctrlBar.style.opacity = "0";
+      ctrlBar.style.visibility = "hidden";
+    }
+  }
+
+  // Barı tekrar gösterme fonksiyonu
+  function showControls() {
+    ctrlBar.style.opacity = "1";
+    ctrlBar.style.visibility = "visible";
+    
+    // Önceki zamanlayıcıyı temizle, her harekette 3 saniyeyi sıfırdan başlatsın
+    clearTimeout(hideTimeout);
+    hideTimeout = setTimeout(hideControls, 3000); // 3 saniye sonra gizler
+  }
+
+  // 1. Oynatıcı alanı üzerinde fare hareket ettiğinde barı göster
+  playerWrap.addEventListener("mousemove", showControls);
+
+  // 2. Oynatıcı alanına (ekrana) tıklandığında veya dokunulduğunda barı göster
+  playerWrap.addEventListener("click", showControls);
+  playerWrap.addEventListener("touchstart", showControls);
+
+  // 3. Fare oynatıcı alanından tamamen çıkarsa doğrudan gizleme sürecini tetikle
+  playerWrap.addEventListener("mouseleave", () => {
+    clearTimeout(hideTimeout);
+    hideTimeout = setTimeout(hideControls, 1000); // Ekrandan çıkınca 1 saniyede gizler
+  } );
+
+  // Video duraklatıldığında barın gizlenmesini engellemek için dinleyiciler
+  const vd = document.getElementById("mainVid");
+  if (vd) {
+    vd.addEventListener("pause", showControls);
+    vd.addEventListener("play", showControls);
+  }
+
+  // İlk açılışta zamanlayıcıyı başlat
+  showControls();
+});
 // ════════════════════════════════════════
 // CONFIG
 // ════════════════════════════════════════
