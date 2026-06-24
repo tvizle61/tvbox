@@ -412,22 +412,6 @@ input,select{font-family:var(--fb);}
 }
 .tech-item:hover{border-color:var(--acc);color:var(--txt);}
 .tech-icon{font-size:18px;}
-/* ── SON İZLENENLER ── */
-.recent-bar{background:var(--s2);border-bottom:1px solid var(--bd);padding:6px 12px;display:flex;align-items:center;gap:8px;overflow-x:auto;flex-shrink:0;}
-.recent-bar::-webkit-scrollbar{height:0;}
-.recent-lbl{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--acc3);white-space:nowrap;flex-shrink:0;}
-.recent-chip{display:flex;align-items:center;gap:6px;background:var(--s3);border:1px solid var(--bd);border-radius:20px;padding:4px 10px;cursor:pointer;transition:all .2s;flex-shrink:0;}
-.recent-chip:hover{border-color:var(--acc);background:rgba(0,212,255,.07);}
-.recent-chip-name{font-size:12px;color:var(--txt2);white-space:nowrap;}
-
-/* ── ARAMA GEÇMİŞİ ── */
-.search-hist{position:absolute;top:100%;left:0;right:0;background:var(--s1);border:1px solid var(--bd);border-radius:var(--r2);padding:6px;z-index:50;display:none;box-shadow:0 8px 24px rgba(0,0,0,.5);}
-.search-hist.on{display:block;}
-.sh-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--r);cursor:pointer;transition:background .15s;font-size:13px;color:var(--txt2);}
-.sh-item:hover{background:var(--s2);color:var(--txt);}
-.sh-clear{width:100%;padding:6px;border:none;background:transparent;color:var(--txt3);font-size:11px;cursor:pointer;transition:color .15s;text-align:center;}
-.sh-clear:hover{color:var(--acc2);}
-.sb-search-wrap{position:relative;}
 
 /* ── KANAL DURUM ROZETI ── */
 .ch-offline .ch-dot{background:var(--txt3);animation:none;}
@@ -716,10 +700,11 @@ input,select{font-family:var(--fb);}
             </div>
             </div> 
 
-        <div class="p-ov-bot" style="width: 100%; max-width: 100%; margin-top: 0; padding-top: 0;">
-          <div class="p-prog" style="margin-bottom: 4px;"><div class="p-prog-fill"></div></div>
+        </div>
+        <div class="p-ov-bot" style="width: 100%; max-width: 100%;">
+          <div class="p-prog"><div class="p-prog-fill"></div></div>
           
-          <div class="p-ctrls" style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; width: 100%; height: 36px; box-sizing: border-box; padding: 0 10px;">
+          <div class="p-ctrls" style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; width: 100%; height: 40px; box-sizing: border-box; padding: 0 10px;">
             
             <button class="pcb" onclick="takeScreenshot()" title="Ekran Görüntüsü" style="width: 16px; height: 16px; min-width: 16px; padding: 0; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:100%; height:100%;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
