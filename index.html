@@ -2037,6 +2037,30 @@ function renderAdSummary(){
 document.addEventListener('DOMContentLoaded',()=>{ setTimeout(applyAd,500); });
 
 
+// ════════════════════════════════════════
+// SON İZLENENLER
+// ════════════════════════════════════════
+function addRecent(ch){
+  recentCh=recentCh.filter(c=>c.id!==ch.id);
+  recentCh.unshift({id:ch.id,name:ch.name,grp:ch.grp,logo:ch.logo,url:ch.url});
+  if(recentCh.length>10) recentCh.pop();
+  lss('vg_recent',JSON.stringify(recentCh));
+  renderRecentBar();
+}
+function renderRecentBar(){
+  const bar=document.getElementById('recentBar');
+  const chips=document.getElementById('recentChips');
+  if(!bar||!chips) return;
+  if(!recentCh.length){ bar.style.display='none'; return; }
+  bar.style.display='flex'; chips.innerHTML='';
+  recentCh.slice(0,8).forEach(ch=>{
+    const d=document.createElement('div'); d.className='recent-chip';
+    const em=grpEmoji(ch.grp);
+    d.innerHTML='<span style="font-size:13px">'+em+'</span><span class="recent-chip-name">'+ch.name+'</span>';
+    d.onclick=()=>goChannel(ch);
+    chips.appendChild(d);
+  });
+}
 
 // ════════════════════════════════════════
 // ARAMA GEÇMİŞİ
