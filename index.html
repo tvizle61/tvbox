@@ -1588,75 +1588,7 @@ function playCh(ch){
   
   const vd=document.getElementById('mainVid');
   
-  // ══════════════════════════════════════════════════════════════
-  // SİYAH BOŞLUKLARI KAPATAN VE VİDEOYU TAM EKRAN YAPAN EKLEME
-  // ══════════════════════════════════════════════════════════════
-  if(vd) {
-    vd.style.width = '100%';
-    vd.style.height = '100%';
-    vd.style.objectFit = 'fill'; // Boşlukları videoyu sağa sola esneterek tamamen kapatır.
-    // Eğer videonun basıklaşmasını istemezsen 'fill' yerine 'cover' yazabilirsin.
-  }
-  // ══════════════════════════════════════════════════════════════
-
-  killAll(); showBuf(true);
-  // Ses hafızası uygula
-  vd.volume=savedVol; document.querySelector('.vol-slider').value=savedVol*100;
-  const vp=document.getElementById('volPct'); if(vp) vp.textContent=Math.round(savedVol*100)+'%';
-  playUrl(vd, ch.url, true);
-  updatePlayBtn();
-  addRecent(ch);
-  renderChannels();
-  renderEpg();
-  setTimeout(scrollToActive,80);
-  toast('📺 '+ch.name,'🔴');
-}
-
-function restartStream(){ if(curCh) playCh(curCh); }
-function togglePlay(){ const v=document.getElementById('mainVid'); v.paused?v.play():v.pause(); updatePlayBtn(); }
-function updatePlayBtn(){
-  const v=document.getElementById('mainVid');
-  setTimeout(()=>{
-    const b=document.getElementById('playBtn'); if(!b) return;
-    b.innerHTML=v.paused
-      ?'<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>'
-      :'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg>';
-  },80);
-}
-function toggleMute(){ const v=document.getElementById('mainVid'); v.muted=!v.muted; }
-function setVol(val){
-  const v=document.getElementById('mainVid'); v.volume=val/100; v.muted=val==0;
-  savedVol=val/100; lss('vg_vol',savedVol);
-  const vp=document.getElementById('volPct'); if(vp) vp.textContent=Math.round(val)+'%';
-}
-function doFS(){ const e=document.getElementById('playerWrap'); if(!document.fullscreenElement) e.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); }
-function doPiP(){ const v=document.getElementById('mainVid'); if(document.pictureInPictureElement) document.exitPictureInPicture().catch(()=>{}); else if(v.readyState) v.requestPictureInPicture().catch(()=>toast('PiP desteklenmiyor','⚠️')); }
-function setQual(q){
-  document.getElementById('qualLabel').textContent=q===-1?'OTO':(q+'p');
-  document.querySelectorAll('.p-qual-item').forEach(b=>b.classList.toggle('on',b.textContent.includes(q===-1?'Otomatik':q+'')));
-  if(hlsInst){ if(q===-1){ hlsInst.currentLevel=-1; } else { const ls=hlsInst.levels; let best=-1; ls.forEach((l,i)=>{ if(l.height<=q&&(best===-1||l.height>ls[best].height)) best=i; }); if(best!==-1) hlsInst.currentLevel=best; } }
-  toast('Kalite: '+(q===-1?'Otomatik':q+'p'),'🎯');
-}
-
-document.getElementById('mainVid').addEventListener('play',updatePlayBtn);
-document.getElementById('mainVid').addEventListener('pause',updatePlayBtn);
-document.getElementById('mainVid').addEventListener('waiting',()=>showBuf(true));
-document.getElementById('mainVid').addEventListener('playing',()=>showBuf(false));
-
-function adminPlay(){
-  if(!isAdmin) return;
-  const url=(document.getElementById('adminUrl').value||'').trim();
-  if(!url){ toast('URL girin','⚠️'); return; }
-  curCh={id:'manual',name:url.split('/').pop().split('?')[0]||'Akış',url,grp:'Manuel',logo:''};
-  document.getElementById('pEmpty').style.display='none';
-  document.getElementById('pTitle').textContent=curCh.name;
-  document.getElementById('pGrp').textContent='Manuel';
-  const vd=document.getElementById('mainVid');
-  killAll(); showBuf(true);
-  playUrl(vd,url,true);
-  updatePlayBtn();
-  toast('▶️ Yükleniyor…','📡');
-}
+ 
 
 // ════════════════════════════════════════
 // EPG
