@@ -412,7 +412,13 @@ input,select{font-family:var(--fb);}
 }
 .tech-item:hover{border-color:var(--acc);color:var(--txt);}
 .tech-icon{font-size:18px;}
-
+/* ── SON İZLENENLER ── */
+.recent-bar{background:var(--s2);border-bottom:1px solid var(--bd);padding:6px 12px;display:flex;align-items:center;gap:8px;overflow-x:auto;flex-shrink:0;}
+.recent-bar::-webkit-scrollbar{height:0;}
+.recent-lbl{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--acc3);white-space:nowrap;flex-shrink:0;}
+.recent-chip{display:flex;align-items:center;gap:6px;background:var(--s3);border:1px solid var(--bd);border-radius:20px;padding:4px 10px;cursor:pointer;transition:all .2s;flex-shrink:0;}
+.recent-chip:hover{border-color:var(--acc);background:rgba(0,212,255,.07);}
+.recent-chip-name{font-size:12px;color:var(--txt2);white-space:nowrap;}
 
 /* ── ARAMA GEÇMİŞİ ── */
 .search-hist{position:absolute;top:100%;left:0;right:0;background:var(--s1);border:1px solid var(--bd);border-radius:var(--r2);padding:6px;z-index:50;display:none;box-shadow:0 8px 24px rgba(0,0,0,.5);}
@@ -2058,57 +2064,7 @@ function renderRecentBar(){
 }
 
 // ════════════════════════════════════════
-// ARAMA GEÇMİŞİ
-// ════════════════════════════════════════
-function addSearchHist(q){
-  if(!q||q.length<2) return;
-  searchHist=searchHist.filter(s=>s!==q);
-  searchHist.unshift(q);
-  if(searchHist.length>8) searchHist.pop();
-  lss('vg_shist',JSON.stringify(searchHist));
-}
-function showSearchHist(){
-  const q=(document.getElementById('sbSearch').value||'').trim();
-  const el=document.getElementById('searchHist'); if(!el) return;
-  const items=q?searchHist.filter(s=>s.toLowerCase().includes(q.toLowerCase())):searchHist;
-  if(!items.length){ el.classList.remove('on'); return; }
-  el.innerHTML='';
-  items.forEach(s=>{
-    const d=document.createElement('div'); d.className='sh-item';
-    d.innerHTML='🕐 '+s;
-    d.onclick=()=>{ document.getElementById('sbSearch').value=s; debRender(); hideSearchHist(); };
-    el.appendChild(d);
-  });
-  if(searchHist.length){
-    const clr=document.createElement('button'); clr.className='sh-clear';
-    clr.textContent='Geçmişi Temizle';
-    clr.onclick=()=>{ searchHist=[]; lss('vg_shist','[]'); hideSearchHist(); };
-    el.appendChild(clr);
-  }
-  el.classList.add('on');
-}
-function hideSearchHist(){ const el=document.getElementById('searchHist'); if(el) el.classList.remove('on'); }
 
-// ════════════════════════════════════════
-// SCREENSHOT
-// ════════════════════════════════════════
-function takeScreenshot(){
-  const vd=document.getElementById('mainVid');
-  if(!vd||!vd.videoWidth){ toast('Video yok','⚠️'); return; }
-  try{
-    const cv=document.createElement('canvas');
-    cv.width=vd.videoWidth; cv.height=vd.videoHeight;
-    cv.getContext('2d').drawImage(vd,0,0);
-    const a=document.createElement('a');
-    a.href=cv.toDataURL('image/png');
-    a.download=(curCh?curCh.name:'ekran')+'_'+new Date().toISOString().slice(0,19).replace(/:/g,'-')+'.png';
-    a.click();
-    // flash efekti
-    const fl=document.getElementById('screenshotFlash');
-    if(fl){ fl.style.opacity='.6'; setTimeout(()=>fl.style.opacity='0',150); }
-    toast('📸 Ekran görüntüsü kaydedildi','📸');
-  }catch(e){ toast('Ekran görüntüsü alınamadı (CORS)','⚠️'); }
-}
 
 // ════════════════════════════════════════
 // SWIPE (dokunmatik kanal geçişi)
