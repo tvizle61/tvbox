@@ -94,7 +94,9 @@ input,select{font-family:var(--fb);}
     opacity: 1 !important;
     display: flex !important;
 }
-
+/* Kategori kaydırma çubuğunu gizle ve öncelik ver */
+#sbCats::-webkit-scrollbar { display: none; }
+#sbCats { z-index: 100; position: relative; }
 /* ══════════════════════════════════════════
    APP LAYOUT
 ══════════════════════════════════════════ */
@@ -1125,48 +1127,51 @@ input,select{font-family:var(--fb);}
         <div class="screenshot-flash" id="screenshotFlash"></div>
         <div class="auto-next-bar" id="autoNextBar"></div>
         <div class="p-ov" id="pOv">
-          <div class="p-ov-top">
-            <div class="p-ov-info">
-              <span class="p-live-badge">● CANLI</span>
-              <div>
-                <div class="p-ch-title" id="pTitle">—</div>
-                <div style="font-size:11px;color:rgba(255,255,255,.45)" id="pGrp"></div>
-              </div>
-            </div>
-            <div class="p-top-btns">
-              <button class="pcb" onclick="takeScreenshot()" title="Ekran Görüntüsü"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></button>
-              <button class="pcb" onclick="restartStream()" title="Yenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg></button>
-              <button class="pcb" onclick="doPiP()" title="PiP"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="14" y="10" width="8" height="7" rx="1"/></svg></button>
-              <button class="pcb" onclick="doFS()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
-            </div>
-          </div>
-          <div class="p-ov-bot">
-            <div class="p-prog"><div class="p-prog-fill"></div></div>
-            <div class="p-ctrls">
-              <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
-                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </button>
-              <div class="vol-wrap">
-                <button onclick="toggleMute()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
-                <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setVol(this.value)">
-                <span class="vol-pct" id="volPct">100%</span>
-              </div>
-              <div class="p-qual-wrap">
-                <button class="p-qual-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><span id="qualLabel">OTO</span></button>
-                <div class="p-qual-drop">
-                  <button class="p-qual-item on" onclick="setQual(-1)">Otomatik</button>
-                  <button class="p-qual-item" onclick="setQual(1080)">1080p HD</button>
-                  <button class="p-qual-item" onclick="setQual(720)">720p HD</button>
-                  <button class="p-qual-item" onclick="setQual(480)">480p</button>
-                  <button class="p-qual-item" onclick="setQual(360)">360p</button>
-                </div>
-              </div>
-              <div class="p-spc"></div>
-              <span class="p-time" id="pTime">🔴 CANLI</span>
-            </div>
-          </div>
+  <div class="p-ov-top">
+    <div class="p-ov-info">
+      <span class="p-live-badge">● CANLI</span>
+      <div>
+        <div class="p-ch-title" id="pTitle">—</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.45)" id="pGrp"></div>
+      </div>
+    </div>
+    <div class="p-top-btns">
+      <button class="pcb" onclick="takeScreenshot()" title="Ekran Görüntüsü"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></button>
+      <button class="pcb" onclick="restartStream()" title="Yenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg></button>
+      <button class="pcb" onclick="doPiP()" title="PiP"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="14" y="10" width="8" height="7" rx="1"/></svg></button>
+      <button class="pcb" onclick="doFS()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
+    </div>
+  </div>
+
+  <div class="sb-cats" id="sbCats" style="padding: 10px 15px; display: flex; gap: 8px; overflow-x: auto; white-space: nowrap; background: rgba(0,0,0,0.6); -webkit-overflow-scrolling: touch; scrollbar-width: none;">
+    </div>
+
+  <div class="p-ov-bot">
+    <div class="p-prog"><div class="p-prog-fill"></div></div>
+    <div class="p-ctrls">
+      <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+      <div class="vol-wrap">
+        <button onclick="toggleMute()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+        <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setVol(this.value)">
+        <span class="vol-pct" id="volPct">100%</span>
+      </div>
+      <div class="p-qual-wrap">
+        <button class="p-qual-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><span id="qualLabel">OTO</span></button>
+        <div class="p-qual-drop">
+          <button class="p-qual-item on" onclick="setQual(-1)">Otomatik</button>
+          <button class="p-qual-item" onclick="setQual(1080)">1080p HD</button>
+          <button class="p-qual-item" onclick="setQual(720)">720p HD</button>
+          <button class="p-qual-item" onclick="setQual(480)">480p</button>
+          <button class="p-qual-item" onclick="setQual(360)">360p</button>
         </div>
       </div>
+      <div class="p-spc"></div>
+      <span class="p-time" id="pTime">🔴 CANLI</span>
+    </div>
+  </div>
+</div>
       
       <div class="sb-cats" id="sbCats" style="padding: 10px; display: flex; gap: 5px; overflow-x: auto; white-space: nowrap; background: rgba(0,0,0,0.2);"></div>
       
