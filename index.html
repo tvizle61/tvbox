@@ -174,6 +174,9 @@ input,select{font-family:var(--fb);}
 /* ══════════════════════════════════════════
    PLAYER PAGE (GÜNCELLENDI - TABLET IÇIN SABIT BARKODU)
 ══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   PLAYER PAGE (YAYIN AÇILMA SORUNU GİDERİLDİ)
+══════════════════════════════════════════ */
 .player-wrap {
   flex: 1;
   position: relative;
@@ -187,10 +190,11 @@ input,select{font-family:var(--fb);}
   height: 100%;
 }
 
+/* !important kaldırıldı, kütüphanenin videoyu yüklemesine izin verildi */
 #mainVid {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: fill !important; 
+  width: 100%;
+  height: 100%;
+  object-fit: fill; /* Siyah boşlukları yine kapatır ama kütüphaneyi kilitlemez */
   background: #000;
 }
 
@@ -247,22 +251,16 @@ input,select{font-family:var(--fb);}
   animation: sp .65s linear infinite;
 }
 
-/* OVERLAY (Görünmez duvar kaldırıldı, her zaman görünür yapıldı) */
+/* OVERLAY - Tıklama geçirgenliği sağlandı */
 .p-ov {
   position: absolute;
   inset: 0;
   display: flex !important;
   flex-direction: column;
   justify-content: space-between;
-  opacity: 1 !important; /* Her zaman görünür */
-  visibility: visible !important; /* Her zaman görünür */
-  pointer-events: none !important; /* KRİTİK: Video katmanı tıklamayı engellemez, arkadaki kanallara dokunabilirsin! */
-}
-
-/* Hover efektleri tablet için tamamen devre dışı bırakıldı */
-.player-wrap:hover .p-ov, .p-ov.vis {
   opacity: 1 !important;
-  pointer-events: none !important;
+  visibility: visible !important;
+  pointer-events: none !important; /* Arka plana tıklamayı serbest bırakır */
 }
 
 .p-ov-top {
@@ -271,7 +269,7 @@ input,select{font-family:var(--fb);}
   display: flex;
   align-items: center;
   justify-content: space-between;
-  pointer-events: auto !important; /* Üstteki butonlar tıklanabilir kalır */
+  pointer-events: auto !important;
 }
 
 .p-ov-info {
@@ -310,43 +308,16 @@ input,select{font-family:var(--fb);}
   max-width: 400px;
 }
 
-.p-top-btns {
-  display: flex;
-  gap: 5px;
-}
-
-.pcb {
-  background: rgba(0,0,0,.5);
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: var(--r);
-  color: #fff;
-  padding: 6px;
-  display: flex;
-  align-items: center;
-  transition: all .15s;
-}
-
-.pcb:hover {
-  background: rgba(255,255,255,.15);
-}
-
-.pcb svg {
-  width: 15px;
-  height: 15px;
-}
-
-/* ALT BARI SABİTLEME ALANI */
+/* ALT BARIN EKRANA SABİTLENMESİ */
 .p-ov-bot {
-  background: rgba(0,0,0,0.85) !important; /* Arka planı hafif koyulaştırdık ki butonlar net görünsün */
+  background: rgba(0,0,0,0.85) !important;
   padding: 12px 16px;
-  pointer-events: auto !important; /* Alt bardaki oynat, ses vb. butonlar sorunsuz tıklanır */
+  pointer-events: auto !important; /* Butonlar tıklanabilir */
   position: absolute !important;
   bottom: 0 !important;
   left: 0 !important;
   right: 0 !important;
 }
-
-/* İlerleme çubuğu (p-prog) kodları temizlendi */
 
 .p-ctrls {
   display: flex;
@@ -2820,46 +2791,28 @@ setTimeout(function warn(){
   setTimeout(warn, 2000);
 }, 1000);
 </script>
- <script>
+<script>
   document.addEventListener("DOMContentLoaded", () => {
     const mainVideo = document.getElementById('mainVid');
-    
     if (!mainVideo) return;
 
-    // ÇÖZÜM 1: Video elementine yeni bir kanal linki yüklendiği an otomatik oynatmayı tetikler
-    mainVideo.addEventListener('loadstart', () => {
-      setTimeout(() => {
-        mainVideo.play()
-          .then(() => {
-            console.log("Kanal başarıyla otomatik başlatıldı.");
-          })
-          .catch((error) => {
-            console.log("Tarayıcı engeli algılandı. Ses kapatılarak tekrar deneniyor...", error);
-            // Araç tabletlerindeki tarayıcılar (örneğin Chrome veya Android WebView) 
-            // bazen kullanıcı etkileşimi olmadan sesli otomatik oynatmayı engeller.
-            // Bu engeli aşmak için videoyu sessize alıp yürütüyoruz:
+    // Kanal listesindeki bir elemana tıklandığında tetiklenir
+    document.addEventListener('click', (event) => {
+      const targetChItem = event.target.closest('.ch-item');
+      if (targetChItem) {
+        // Döngüye girmemesi ve yayının m3u8 kodunun çözülmesi için 
+        // güvenli bir bekleme süresi (500ms) verip ardından oynatıyoruz.
+        setTimeout(() => {
+          mainVideo.play().catch((error) => {
+            console.log("Tablet otomatik oynatma engeli verdi, ses kapatılıyor...");
             mainVideo.muted = true;
             mainVideo.play();
           });
-      }, 200); // Küçük bir yüklenme payı
-    });
-
-    // ÇÖZÜM 2: Sidebar'daki kanal listesine dokunulma anını doğrudan dinler
-    // Gelecekte listeye eklenecek yeni kanalları da kapsasın diye "Event Delegation" kullanıyoruz
-    document.addEventListener('click', (event) => {
-      const targetChItem = event.target.closest('.ch-item');
-      
-      if (targetChItem) {
-        // Kanal ismine veya logosuna tıklandığında player'a ufak bir süre tanıyıp oynat komutu gönderiyoruz
-        setTimeout(() => {
-          if (mainVideo.paused) {
-            mainVideo.play().catch(e => console.log("Otomatik oynatma başlatılamadı:", e));
-          }
-        }, 400); // Player'ın m3u8 linkini çözmesi için tanınan süre
+        }, 500); 
       }
     });
   });
-</script> 
+</script>
 </body>
 </html>
 </html>
