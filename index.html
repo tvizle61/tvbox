@@ -754,21 +754,28 @@ input,select{font-family:var(--fb);}
         
         
         <!-- LEADERBOARD REKLAM -->
-        <div class="ad-leader" id="adLeader" onclick="adLeaderClick()">
-          <span class="ad-tag">REKLAM</span>
-          <div class="ad-leader-inner" id="adLeaderInner">
-            <div class="ad-leader-placeholder">
-              <span>📢</span><span>728 × 60 — Leaderboard Banner (Admin panelinden yönet)</span>
-            </div>
-          </div>
-        </div>
-        <div class="admin-bar" id="adminBar">
-          <input type="text" id="adminUrl" placeholder="Admin — URL gir (m3u8, .ts, http…)" onkeydown="if(event.key==='Enter')adminPlay()">
-          <button class="btn btn-acc" onclick="adminPlay()"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>OYNAT</button>
-          <button class="btn btn-g" onclick="openModal('addChModal')">+ KANAL</button>
-          <button class="btn btn-g" onclick="openModal('m3uModal')">M3U YÜKLE</button>
-        </div>
-      </div>
+       <div class="ad-leader" id="adLeader" onclick="adLeaderClick()">
+  <span class="ad-tag">REKLAM</span>
+  <div class="ad-leader-inner" id="adLeaderInner">
+    <div class="ad-leader-placeholder">
+      <span>📢</span><span>728 × 60 — Leaderboard Banner (Admin panelinden yönet)</span>
+    </div>
+  </div>
+</div>
+
+<div class="player-controls">
+  <div class="controls-left">
+    <button class="play-btn"></button>
+    <div class="volume-bar">
+      <input type="range" id="volume" value="100">
+      <span>100%</span>
+    </div>
+    <button class="btn-oto">OTO</button>
+    
+    <button class="btn btn-g" onclick="openModal('addChModal')" style="margin-left: 10px;">+ KANAL</button>
+    <button class="btn btn-g" onclick="openModal('m3uModal')" style="margin-left: 5px;">M3U YÜKLE</button>
+  </div>
+</div>
 
       <!-- MOVIES PAGE -->
       <div id="pageMovies" class="sub-page">
