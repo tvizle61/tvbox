@@ -172,10 +172,7 @@ input,select{font-family:var(--fb);}
 .sub-page.on{display:flex;}
 
 /* ══════════════════════════════════════════
-   PLAYER PAGE
-══════════════════════════════════════════ */
-/* ══════════════════════════════════════════
-   PLAYER PAGE (GÜNCELLENDİ - SİYAH ALANLAR KALDIRILDI)
+   PLAYER PAGE (GÜNCELLENDI - TABLET IÇIN SABIT BARKODU)
 ══════════════════════════════════════════ */
 .player-wrap {
   flex: 1;
@@ -193,7 +190,6 @@ input,select{font-family:var(--fb);}
 #mainVid {
   width: 100% !important;
   height: 100% !important;
-  /* object-fit: fill videoyu esneterek siyah boşluk bırakmadan ekrana tam sığdırır */
   object-fit: fill !important; 
   background: #000;
 }
@@ -251,21 +247,22 @@ input,select{font-family:var(--fb);}
   animation: sp .65s linear infinite;
 }
 
-/* OVERLAY */
+/* OVERLAY (Görünmez duvar kaldırıldı, her zaman görünür yapıldı) */
 .p-ov {
   position: absolute;
   inset: 0;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   justify-content: space-between;
-  opacity: 0;
-  transition: opacity .25s;
-  pointer-events: none;
+  opacity: 1 !important; /* Her zaman görünür */
+  visibility: visible !important; /* Her zaman görünür */
+  pointer-events: none !important; /* KRİTİK: Video katmanı tıklamayı engellemez, arkadaki kanallara dokunabilirsin! */
 }
 
+/* Hover efektleri tablet için tamamen devre dışı bırakıldı */
 .player-wrap:hover .p-ov, .p-ov.vis {
-  opacity: 1;
-  pointer-events: all;
+  opacity: 1 !important;
+  pointer-events: none !important;
 }
 
 .p-ov-top {
@@ -274,6 +271,7 @@ input,select{font-family:var(--fb);}
   display: flex;
   align-items: center;
   justify-content: space-between;
+  pointer-events: auto !important; /* Üstteki butonlar tıklanabilir kalır */
 }
 
 .p-ov-info {
@@ -337,29 +335,18 @@ input,select{font-family:var(--fb);}
   height: 15px;
 }
 
+/* ALT BARI SABİTLEME ALANI */
 .p-ov-bot {
-  background: linear-gradient(to top, rgba(0,0,0,.85), transparent);
+  background: rgba(0,0,0,0.85) !important; /* Arka planı hafif koyulaştırdık ki butonlar net görünsün */
   padding: 12px 16px;
+  pointer-events: auto !important; /* Alt bardaki oynat, ses vb. butonlar sorunsuz tıklanır */
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
 }
 
-.p-prog {
-  height: 3px;
-  background: rgba(255,255,255,.15);
-  border-radius: 2px;
-  margin-bottom: 12px;
-  overflow: hidden;
-}
-
-.p-prog-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--acc), var(--acc3));
-  animation: pgp 2s linear infinite;
-  background-size: 200% 100%;
-}
-
-@keyframes pgp {
-  to { background-position: -200% 0 }
-}
+/* İlerleme çubuğu (p-prog) kodları temizlendi */
 
 .p-ctrls {
   display: flex;
@@ -2833,30 +2820,7 @@ setTimeout(function warn(){
   setTimeout(warn, 2000);
 }, 1000);
 </script>
-  <script>
-  // Videoya yeni bir kanal kaynağı yüklendiğinde otomatik oynatmayı tetikler
-  const mainVideoElement = document.getElementById('mainVid');
-
-  if (mainVideoElement) {
-    // Tarayıcı veya player kaynağı değiştirdiğinde bu event tetiklenir
-    mainVideoElement.addEventListener('loadstart', () => {
-      // Kısa bir süre bekleyip videoyu oynatmaya zorluyoruz
-      setTimeout(() => {
-        mainVideoElement.play()
-          .then(() => {
-            console.log("Kanal başarıyla otomatik başlatıldı.");
-          })
-          .catch((error) => {
-            console.log("Otomatik başlatma tarayıcı engeline takıldı, ses kapatılarak deneniyor:", error);
-            // Tarayıcılar bazen ses açıkken otomatik oynatmayı engeller. 
-            // Araçta sorunsuz açılması için sessize alıp başlatmayı dener:
-            mainVideoElement.muted = true;
-            mainVideoElement.play();
-          });
-      }, 300); // 300 milisaniye yükleme payı bırakıyoruz
-    });
-  }
-</script>
+  
 </body>
 </html>
 </html>
