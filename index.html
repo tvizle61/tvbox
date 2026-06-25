@@ -1125,18 +1125,19 @@ input,select{font-family:var(--fb);}
       <div class="swipe-hint right" id="swipeRight">Sonraki ➡</div>
       <div class="screenshot-flash" id="screenshotFlash"></div>
       <div class="auto-next-bar" id="autoNextBar"></div>
-      <div class="p-ov" id="pOv">
-        <div class="p-ov-top">
-          <div class="p-ov-info">
-            <span class="p-live-badge">● CANLI</span>
-            <div>
-              <div class="p-ch-title" id="pTitle">—</div>
-              <div style="font-size:11px;color:rgba(255,255,255,.45)" id="pGrp"></div>
-            </div>
-          </div>
-        </div>
+     <div class="p-ov-bot">
+    <div class="player-cats" id="playerCats"></div>
+
+    <div class="p-prog"><div class="p-prog-fill"></div></div>
+
+    <div class="p-ctrls">
+        <button class="p-play-btn" onclick="togglePlay()" id="playBtn">...</button>
         
-        <div class="p-ov-bot">
+        <div class="vol-wrap">...</div>
+        
+        <div class="p-spc"></div> <button class="btn btn-g" onclick="openModal('addChModal')">+ KANAL</button>
+    </div>
+</div>
           <div class="p-prog"><div class="p-prog-fill"></div></div>
           <div class="p-ctrls">
             <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
