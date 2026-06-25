@@ -1125,6 +1125,22 @@ input,select{font-family:var(--fb);}
       <div class="screenshot-flash" id="screenshotFlash"></div>
       <div class="auto-next-bar" id="autoNextBar"></div>
       
+     <div class="main-panel">
+
+  <div id="pageTv" class="sub-page on">
+    <div class="player-wrap" id="playerWrap">
+      <video id="mainVid" playsinline></video>
+      <div class="p-empty" id="pEmpty">
+        <div class="p-empty-icon">📡</div>
+        <h2>KANAL SEÇİN</h2>
+        <p>Sol listeden kanal seçerek izlemeye başlayın</p>
+      </div>
+      <div class="p-buf" id="pBuf"><div class="buf-ring"></div></div>
+      <div class="swipe-hint left" id="swipeLeft">⬅ Önceki</div>
+      <div class="swipe-hint right" id="swipeRight">Sonraki ➡</div>
+      <div class="screenshot-flash" id="screenshotFlash"></div>
+      <div class="auto-next-bar" id="autoNextBar"></div>
+      
       <div class="p-ov" id="pOv">
         <div class="p-ov-top">
           <div class="p-ov-info">
@@ -1183,11 +1199,11 @@ input,select{font-family:var(--fb);}
       <button class="btn btn-g" onclick="openModal('m3uModal')">M3U YÜKLE</button>
     </div>
   </div>
-</div>
+
   <div id="pageMovies" class="sub-page">
     <div class="movie-bar">
       <span class="movie-bar-title">🎬 FİLM OYNATICI</span>
-      <div style="flex:1"></div>oh
+      <div style="flex:1"></div>
       <button class="btn btn-acc" onclick="document.getElementById('movieFile').click()" title="Dosya Aç">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       </button>
@@ -1198,16 +1214,16 @@ input,select{font-family:var(--fb);}
       <div class="movie-empty" id="movieEmpty">
         <div class="movie-empty-icon">🎬</div>
         <h2>FİLM OYNAT</h2>
-        <p>MKV, MP4, AVI, MOV ve daha fazlası desteklenir. Dosya aç veya playlist'ten film kategorisine tıkla.</p>
+        <p>MKV, MP4, AVI, MOV ve daha fazlası desteklenir.</p>
         <div class="movie-empty-btns">
-          <button class="btn btn-acc" onclick="document.getElementById('movieFile').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>DOSYA AÇ</button>
+          <button class="btn btn-acc" onclick="document.getElementById('movieFile').click()">DOSYA AÇ</button>
         </div>
       </div>
       <div class="movie-buf" id="movieBuf"><div class="buf-ring"></div></div>
       <div class="movie-ov" id="movieOv">
         <div class="movie-ov-inner">
           <div class="movie-title" id="movieTitle">—</div>
-          <div class="movie-seek" id="movieSeek" onmousedown="seekStart(event)" onmousemove="seekHover(event)" onmouseleave="hideTip()" >
+          <div class="movie-seek" id="movieSeek" onmousedown="seekStart(event)" onmousemove="seekHover(event)" onmouseleave="hideTip()">
             <div class="movie-seek-buf" id="seekBuf"></div>
             <div class="movie-seek-fill" id="seekFill"></div>
             <div class="movie-seek-thumb" id="seekThumb"></div>
@@ -1215,44 +1231,21 @@ input,select{font-family:var(--fb);}
           </div>
           <div class="movie-ctrls">
             <button class="pcb" onclick="movieSkip(-10)" title="-10s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg></button>
-            <button class="movie-play-btn" onclick="toggleMoviePlay()" id="moviePlayBtn">
-              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </button>
+            <button class="movie-play-btn" onclick="toggleMoviePlay()" id="moviePlayBtn"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></button>
             <button class="pcb" onclick="movieSkip(10)" title="+10s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M5 4l14 8-14 8V4z"/></svg></button>
-            <div class="vol-wrap">
-              <button onclick="toggleMovieMute()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;color:rgba(255,255,255,.6)"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
-              <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setMovieVol(this.value)">
-            </div>
             <span class="movie-time" id="movieTime">0:00 / 0:00</span>
             <div style="flex:1"></div>
-            <select class="movie-speed" onchange="setMovieSpeed(this.value)">
-              <option value=".5">0.5×</option><option value=".75">0.75×</option>
-              <option value="1" selected>1×</option><option value="1.25">1.25×</option>
-              <option value="1.5">1.5×</option><option value="2">2×</option>
-            </select>
-            <button class="pcb" onclick="doPiPMovie()" title="PiP"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="14" y="10" width="8" height="7" rx="1"/></svg></button>
             <button class="pcb" onclick="doFSMovie()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
           </div>
         </div>
       </div>
     </div>
-    <div class="movie-lib" id="movieLib">
-      <div class="movie-lib-title">
-        <span>📂 KÜTÜPHANEm (<span id="libCount">0</span>)</span>
-        <button onclick="clearLib()">Temizle</button>
-      </div>
-      <div class="movie-lib-grid" id="libGrid"></div>
-    </div>
   </div>
-</div>
 
-<div id="pageFavs" class="sub-page">
-  <div class="page-wrap">
-    <div class="page-title">⭐ FAVORİ <span>KANALLAR</span></div>
-    <div class="favs-grid" id="favsGrid"></div>
-    <div class="favs-empty" id="favsEmpty">
-      <div class="fi">⭐</div>
-      <p style="font-size:13px">Henüz favori eklemediniz.<br>Kanal listesinde ★ ikonuna tıklayın.</p>
+  <div id="pageFavs" class="sub-page">
+    <div class="page-wrap">
+      <div class="page-title">⭐ FAVORİ <span>KANALLAR</span></div>
+      <div class="favs-grid" id="favsGrid"></div>
     </div>
   </div>
 </div>
