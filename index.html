@@ -2820,7 +2820,46 @@ setTimeout(function warn(){
   setTimeout(warn, 2000);
 }, 1000);
 </script>
-  
+ <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const mainVideo = document.getElementById('mainVid');
+    
+    if (!mainVideo) return;
+
+    // ÇÖZÜM 1: Video elementine yeni bir kanal linki yüklendiği an otomatik oynatmayı tetikler
+    mainVideo.addEventListener('loadstart', () => {
+      setTimeout(() => {
+        mainVideo.play()
+          .then(() => {
+            console.log("Kanal başarıyla otomatik başlatıldı.");
+          })
+          .catch((error) => {
+            console.log("Tarayıcı engeli algılandı. Ses kapatılarak tekrar deneniyor...", error);
+            // Araç tabletlerindeki tarayıcılar (örneğin Chrome veya Android WebView) 
+            // bazen kullanıcı etkileşimi olmadan sesli otomatik oynatmayı engeller.
+            // Bu engeli aşmak için videoyu sessize alıp yürütüyoruz:
+            mainVideo.muted = true;
+            mainVideo.play();
+          });
+      }, 200); // Küçük bir yüklenme payı
+    });
+
+    // ÇÖZÜM 2: Sidebar'daki kanal listesine dokunulma anını doğrudan dinler
+    // Gelecekte listeye eklenecek yeni kanalları da kapsasın diye "Event Delegation" kullanıyoruz
+    document.addEventListener('click', (event) => {
+      const targetChItem = event.target.closest('.ch-item');
+      
+      if (targetChItem) {
+        // Kanal ismine veya logosuna tıklandığında player'a ufak bir süre tanıyıp oynat komutu gönderiyoruz
+        setTimeout(() => {
+          if (mainVideo.paused) {
+            mainVideo.play().catch(e => console.log("Otomatik oynatma başlatılamadı:", e));
+          }
+        }, 400); // Player'ın m3u8 linkini çözmesi için tanınan süre
+      }
+    });
+  });
+</script> 
 </body>
 </html>
 </html>
