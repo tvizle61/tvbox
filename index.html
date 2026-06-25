@@ -1837,21 +1837,27 @@ function goChannel(ch){
 // ════════════════════════════════════════
 // PLAYER UTILS
 // ════════════════════════════════════════
-function detectType(url){
-  let path=url.toLowerCase();
-  try{ path=new URL(url).pathname.toLowerCase(); }catch{}
-  if(path.endsWith('.mpd'))  return'dash';
-  if(path.endsWith('.m3u8')) return'hls';
-  if(path.endsWith('.m3u'))  return'hls';
-  if(path.endsWith('.ts'))   return'ts';
-  const uf=url.toLowerCase();
-  if(uf.includes('.ts?')||uf.includes('.ts&')) return'ts';
-  if(uf.includes('.m3u8?')||uf.includes('.m3u8&')) return'hls';
-  const nat=['.mkv','.mp4','.avi','.mov','.wmv','.flv','.webm','.m4v','.mpeg','.mpg','.3gp'];
-  if(nat.some(e=>path.endsWith(e))) return'native';
-  if(url.startsWith('rtmp://')||url.startsWith('rtmps://')) return'rtmp';
-  if(url.startsWith('rtsp://')) return'ts';
-  return'hls';
+function detectType(url) {
+  let path = url.toLowerCase();
+  try { path = new URL(url).pathname.toLowerCase(); } catch {}
+  
+  // MPD Kontrolü
+  if (path.endsWith('.mpd')) return 'dash';
+  
+  // HLS Kontrolü (.m3u8 veya .m3u, opsiyonel olarak sorgu parametreleriyle)
+  if (/\.(m3u8|m3u)(\?|&|$)/i.test(url)) return 'hls';
+  
+  // TS (MPEG-TS) Kontrolü (Uzantı veya RTSP protokolü)
+  if (/\.ts(\?|&|$)/i.test(url) || url.startsWith('rtsp://')) return 'ts';
+  
+  // Native (Yerel) Medya Dosyaları
+  const nativeExtensions = /\.(mkv|mp4|avi|mov|wmv|flv|webm|m4v|mpeg|mpg|3gp)$/i;
+  if (nativeExtensions.test(path)) return 'native';
+  
+  // RTMP Protokolü
+  if (/^rtmps?:\/\//i.test(url)) return 'rtmp';
+  
+  return 'hls'; // Varsayılan geri dönüş
 }
 
 function killAll(){
@@ -2065,11 +2071,18 @@ function playMovieCh(ch){
   playMovieEntry(entry);
 }
 
-function playMovieEntry(entry){
-  curMovie=entry;
-  const vd=document.getElementById('movieVid'); if(!vd) return;
-  if(movieHls){ movieHls.destroy(); movieHls=null; }
+function playMovieEntry(entry) {
+  curMovie = entry;
+  const vd = document.getElementById('movieVid'); if (!vd) return;
+  
+  // Eğer eski oynatılan film bir yerel dosya ise ve yeni bir filme geçiliyorsa, tarayıcı hafızasını temizle
+  if (vd.src && vd.src.startsWith('blob:')) {
+    URL.revokeObjectURL(vd.src);
+  }
+  
+  if (movieHls) { movieHls.destroy(); movieHls = null; }
   vd.pause(); vd.removeAttribute('src'); vd.load();
+  // ... kodun geri kalanı aynı kalabilir
   const ee=document.getElementById('movieEmpty'); if(ee) ee.style.display='none';
   const tt=document.getElementById('movieTitle'); if(tt) tt.textContent=entry.name;
   showMovieBuf(true);
@@ -2507,24 +2520,31 @@ function initSwipe(){
 // ════════════════════════════════════════
 // KANAL DURUM KONTROLÜ
 // ════════════════════════════════════════
-async function checkChannelStatus(){
-  const chs=merged().slice(0,20);
-  toast('🔍 '+chs.length+' kanal kontrol ediliyor…','🔍');
-  document.getElementById('statusCheckInfo').textContent='Kontrol ediliyor…';
+async function checkChannelStatus() {
+  const chs = merged().slice(0, 20);
+  toast('🔍 ' + chs.length + ' kanal kontrol ediliyor…', '🔍');
+  document.getElementById('statusCheckInfo').textContent = 'Kontrol ediliyor…';
   offlineChs.clear();
-  let ok=0, fail=0;
-  for(const ch of chs){
-    try{
-      const r=await fetch(ch.url,{method:'HEAD',signal:AbortSignal.timeout(4000)});
-      if(!r.ok) throw new Error();
+  
+  let ok = 0, fail = 0;
+
+  // Tüm istekleri aynı anda (paralel) başlatıyoruz
+  const promises = chs.map(async (ch) => {
+    try {
+      const r = await fetch(ch.url, { method: 'HEAD', signal: AbortSignal.timeout(4000) });
+      if (!r.ok) throw new Error();
       ok++;
-    }catch{
-      offlineChs.add(ch.id); fail++;
+    } catch {
+      offlineChs.add(ch.id);
+      fail++;
     }
-  }
+  });
+
+  await Promise.all(promises); // Tüm isteklerin bitmesini bekle
+
   renderChannels();
-  document.getElementById('statusCheckInfo').textContent='Sonuç: '+ok+' çevrimiçi, '+fail+' erişilemez ('+chs.length+' kanaldan)';
-  toast('✅ Kontrol bitti: '+ok+' çevrimiçi, '+fail+' hatalı','✅');
+  document.getElementById('statusCheckInfo').textContent = 'Sonuç: ' + ok + ' çevrimiçi, ' + fail + ' erişilemez (' + chs.length + ' kanaldan)';
+  toast('✅ Kontrol bitti: ' + ok + ' çevrimiçi, ' + fail + ' hatalı', '✅');
 }
 
 // ════════════════════════════════════════
@@ -2564,12 +2584,11 @@ function setCacheInterval(val){
   if(lbl) lbl.textContent=cacheIntervalMin>=60?(cacheIntervalMin/60)+' saat':cacheIntervalMin+' dakika';
   toast('⏱️ Yenileme aralığı: '+val+' dk','⏱️');
 }
-function saveProxy(){
-  const val=(document.getElementById('proxyInput').value||'').trim();
+function saveProxy() {
+  const val = (document.getElementById('proxyInput').value || '').trim();
   lss('vg_proxy', val);
-  // PROXY_BASE güncelle (runtime)
-  window._proxyBase = val;
-  toast(val ? '✅ Proxy kaydedildi: '+val : '🔴 Proxy kaldırıldı', '🔗');
+  window._proxyBase = val; // Bellekteki proxy tabanını da anlık güncelle
+  toast('🌐 Proxy ayarları kaydedildi', '⚙️');
 }
 
 // Runtime proxy override
