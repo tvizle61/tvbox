@@ -2833,6 +2833,30 @@ setTimeout(function warn(){
   setTimeout(warn, 2000);
 }, 1000);
 </script>
+  <script>
+  // Videoya yeni bir kanal kaynağı yüklendiğinde otomatik oynatmayı tetikler
+  const mainVideoElement = document.getElementById('mainVid');
+
+  if (mainVideoElement) {
+    // Tarayıcı veya player kaynağı değiştirdiğinde bu event tetiklenir
+    mainVideoElement.addEventListener('loadstart', () => {
+      // Kısa bir süre bekleyip videoyu oynatmaya zorluyoruz
+      setTimeout(() => {
+        mainVideoElement.play()
+          .then(() => {
+            console.log("Kanal başarıyla otomatik başlatıldı.");
+          })
+          .catch((error) => {
+            console.log("Otomatik başlatma tarayıcı engeline takıldı, ses kapatılarak deneniyor:", error);
+            // Tarayıcılar bazen ses açıkken otomatik oynatmayı engeller. 
+            // Araçta sorunsuz açılması için sessize alıp başlatmayı dener:
+            mainVideoElement.muted = true;
+            mainVideoElement.play();
+          });
+      }, 300); // 300 milisaniye yükleme payı bırakıyoruz
+    });
+  }
+</script>
 </body>
 </html>
 </html>
