@@ -68,6 +68,32 @@ input,select{font-family:var(--fb);}
 .auth-err{background:rgba(255,62,62,.1);border:1px solid rgba(255,62,62,.3);border-radius:var(--r);padding:8px 12px;font-size:12px;color:var(--acc2);margin-top:8px;display:none;}
 .auth-guest{text-align:center;margin-top:12px;font-size:11px;color:var(--txt3);}
 .auth-guest a{color:var(--acc);text-decoration:underline;cursor:pointer;}
+  /* Alt barı sürekli görünür kılma ve animasyonları devre dışı bırakma */
+.p-ov {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important; /* Arka planı tıklar */
+}
+
+.p-ov-bot {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important; /* Butonların tıklanabilir olması için */
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: rgba(0, 0, 0, 0.85) !important; /* Görünürlük için koyu arka plan */
+    transition: none !important; /* Gizlenme efektini kaldırır */
+    transform: translateY(0) !important;
+}
+
+/* Oynatıcı üzerine gelindiğinde gizlenmesini engellemek için */
+.player-wrap:hover .p-ov-bot {
+    opacity: 1 !important;
+    display: flex !important;
+}
 
 /* ══════════════════════════════════════════
    APP LAYOUT
