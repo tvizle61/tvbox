@@ -1099,9 +1099,9 @@ input,select{font-family:var(--fb);}
       <div class="swipe-hint right" id="swipeRight">Sonraki ➡</div>
       <div class="screenshot-flash" id="screenshotFlash"></div>
       <div class="auto-next-bar" id="autoNextBar"></div>
-      <div class="p-ov" style="opacity: 1 !important; display: flex !important; visibility: visible !important; pointer-events: all !important;">
+      <div class="p-ov" style="opacity: 1 !important; display: flex !important; visibility: visible !important; pointer-events: none !important;">
   
-  <div class="p-ov-top" style="opacity: 1 !important; display: flex !important; visibility: visible !important;">
+  <div class="p-ov-top" style="opacity: 1 !important; display: flex !important; visibility: visible !important; pointer-events: auto !important;">
     <div class="p-ov-info">
       <span class="p-live-badge">● CANLI</span>
       <div>
@@ -1110,7 +1110,7 @@ input,select{font-family:var(--fb);}
     </div>
   </div>
 
-  <div class="p-ov-bot" style="opacity: 1 !important; display: flex !important; visibility: visible !important; pointer-events: all !important; position: absolute !important; bottom: 0 !important; left: 0 !important; right: 0 !important; background: rgba(0,0,0,0.85) !important;">
+  <div class="p-ov-bot" style="opacity: 1 !important; display: flex !important; visibility: visible !important; pointer-events: auto !important; position: absolute !important; bottom: 0 !important; left: 0 !important; right: 0 !important; background: rgba(0,0,0,0.85) !important;">
     <div class="p-ctrls" style="width: 100% !important; display: flex !important; align-items: center !important; gap: 8px !important;">
       <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
         <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
