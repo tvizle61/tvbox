@@ -298,8 +298,9 @@ input,select{font-family:var(--fb);}
   position: relative;
   background: #000;
   display: flex;
+  flex-direction: column; /* İçeriği dikey sıralayarak alt barlara otomatik yer açar */
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Videoyu yukarıya doğru yaslar */
   overflow: hidden;
   min-height: 0;
   width: 100%;
@@ -308,10 +309,11 @@ input,select{font-family:var(--fb);}
 
 #mainVid {
   width: 100% !important;
-  height: 100% !important;
-  /* object-fit: fill videoyu esneterek siyah boşluk bırakmadan ekrana tam sığdırır */
+  /* Alt taraftaki çift katmanlı barın yüksekliği (yaklaşık 90px) kadar alanı videodan düşüyoruz */
+  height: calc(100% - 90px) !important; 
   object-fit: fill !important; 
   background: #000;
+  align-self: flex-start; /* Videonun üst sınıra tam sıfır başlamasını sağlar */
 }
 
 .p-empty {
