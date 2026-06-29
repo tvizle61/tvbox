@@ -224,32 +224,33 @@ input,select{font-family:var(--fb);}
     display: none !important;
 }
 
+/* Kategori Butonları - Yazılar Tam Beyaz Yapıldı */
 .p-cats-bar .cat-pill {
-    flex-shrink: 0 !important; /* Butonların daralmasını engeller */
+    flex-shrink: 0 !important;
     padding: 3px 10px !important;
     border-radius: 4px !important;
-    border: 1px solid var(--bd) !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    color: var(--txt3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important; /* Kenarlıkları biraz daha belirgin yaptık */
+    background: rgba(255, 255, 255, 0.1) !important; /* Arka planı hafif belirginleştirdik */
+    color: #ffffff !important; /* Gri yazı rengi TAM BEYAZ yapıldı */
     font-size: 11px !important;
     font-weight: 600 !important;
     white-space: nowrap !important;
     cursor: pointer !important;
-    height: 22px !important; /* Sabit ince yükseklik */
+    height: 22px !important;
     display: inline-flex !important;
     align-items: center !important;
 }
 
+/* Üzerine gelindiğinde parlaması için */
 .p-cats-bar .cat-pill:hover {
-    border-color: var(--bd2) !important;
-    color: var(--txt2) !important;
-    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: var(--acc) !important;
+    background: rgba(255, 255, 255, 0.2) !important;
 }
 
 .p-cats-bar .cat-pill.on {
     background: var(--acc) !important;
     border-color: var(--acc) !important;
-    color: #000 !important;
+    color: #000 !important; /* Seçili olanın yazısı siyah kalmaya devam ediyor */
 }
 
 .p-prog {
