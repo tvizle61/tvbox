@@ -1137,16 +1137,24 @@ input,select{font-family:var(--fb);}
           </div>
         </div>
         
-        <div class="p-ov-bot">
-          <div class="p-prog"><div class="p-prog-fill"></div></div>
-          <div class="p-cats-bar">
+    <div class="p-ov-bot">
+  <!-- 1. İlerleme Çubuğu -->
+  <div class="p-prog"><div class="p-prog-fill"></div></div>
+  
+  <!-- 2. Kategori Bar (Artık geniş ve ayrı satırda) -->
+  <div class="p-cats-bar">
     <button class="cat-pill on">Tümü</button>
     <button class="cat-pill">İnfo</button>
     <button class="cat-pill">Spor-Diğer</button>
     <button class="cat-pill">Spor-İnve</button>
     <button class="cat-pill">Spor-Eğn</button>
   </div>
-          <div class="p-ctrls">
+
+  <!-- 3. Butonlar (Otomatik olarak aşağı kayacaktır) -->
+  <div class="p-ctrls">
+     ...
+  </div>
+</div>
             <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
               <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             </button>
@@ -2871,14 +2879,25 @@ setTimeout(function warn(){
 </body>
 </html>
 </html>
-/* Oyuncu içi kategori barı stilleri */
+/* Kategori barının tam genişlikte ve ayrı bir satırda olması için */
 .p-cats-bar {
   display: flex; 
   gap: 6px; 
   overflow-x: auto; 
   margin-bottom: 10px; 
-  padding-bottom: 5px;
+  width: 100%;      /* Tam genişlik */
+  padding: 0 16px;  /* Kenarlardan boşluk */
+  box-sizing: border-box;
 }
+
+/* Kapsayıcıyı dikey (alt alta) dizilime zorluyoruz */
+.p-ov-bot {
+  display: flex;
+  flex-direction: column; /* Önemli: Öğeleri alt alta dizer */
+}
+
+/* Kaydırma çubuğunu temiz ve gizli tutalım */
+.p-cats-bar::-webkit-scrollbar { display: none; }
 .p-cats-bar::-webkit-scrollbar { display: none; }
 
 .p-ov-bot .cat-pill {
