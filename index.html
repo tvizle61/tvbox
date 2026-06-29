@@ -1192,31 +1192,32 @@ input,select{font-family:var(--fb);}
 
   <div class="app-body">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sb-search">
-        <div class="sb-cats" id="sbCats" style="display: none !important;"></div>
-        <div class="sb-search-wrap">
-          <input type="text" id="sbSearch" placeholder="🔍 Kanal ara…" oninput="debRender();showSearchHist()" onfocus="showSearchHist()" onblur="setTimeout(hideSearchHist,200)">
-          <div class="search-hist" id="searchHist"></div>
-        </div>
-      </div>
-       <!-- JavaScript'in hata vermemesi için elementi tuttuk ama stil ile tamamen gizledik -->
-<div class="sb-cats" id="sbCats" style="display: none !important;"></div>
-      <div class="sb-info">
-        <span id="sbCount">Yükleniyor…</span>
-        <button class="sb-sort" onclick="toggleSort()">⇅ Sırala</button>
-      </div>
-      <div class="ch-list" id="chList">
-        <div class="sb-load" id="sbLoad">
-          <div class="spin"></div>
-          <p style="font-size:13px">Playlist yükleniyor…</p>
-        </div>
-      </div>
-    </aside>
+   <!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-search">
+    <div class="sb-search-wrap">
+      <input type="text" id="sbSearch" placeholder="🔍 Kanal ara…" oninput="debRender();showSearchHist()" onfocus="showSearchHist()" onblur="setTimeout(hideSearchHist,200)">
+      <div class="search-hist" id="searchHist"></div>
+    </div>
+  </div>
+   
+  <!-- JavaScript hatasını engellemek için SADECE BİR ADET hayalet element bırakıldı -->
+  <div class="sb-cats" id="sbCats" style="display: none !important;"></div>
 
-   <div class="main-panel">
+  <div class="sb-info">
+    <span id="sbCount">Yükleniyor…</span>
+    <button class="sb-sort" onclick="toggleSort()">⇅ Sırala</button>
+  </div>
+  
+  <div class="ch-list" id="chList">
+    <div class="sb-load" id="sbLoad">
+      <div class="spin"></div>
+      <p style="font-size:13px">Playlist yükleniyor…</p>
+    </div>
+  </div>
+</aside>
 
+<div class="main-panel">
   <div id="pageTv" class="sub-page on">
     <div class="player-wrap" id="playerWrap">
       <video id="mainVid" playsinline></video>
