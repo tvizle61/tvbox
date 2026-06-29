@@ -2878,40 +2878,50 @@ function openAdminLogin(){
     // Zaten admin — panele git
     goPage('admin'); return;
   }
-  document.getElementById('adminPwErr').style.display='none';
-  document.getElementById('adminPwInput').value='';
+  if(document.getElementById('adminPwErr')) document.getElementById('adminPwErr').style.display='none';
+  if(document.getElementById('adminPwInput')) document.getElementById('adminPwInput').value='';
   openModal('adminLoginModal');
-  setTimeout(()=>document.getElementById('adminPwInput').focus(),200);
+  setTimeout(()=>{
+    const inp = document.getElementById('adminPwInput');
+    if(inp) inp.focus();
+  },200);
 }
+
 function doAdminLogin(){
-  const pw=document.getElementById('adminPwInput').value;
-  if(pw===ADMIN_PW){
+  const inp = document.getElementById('adminPwInput');
+  if(!inp) return;
+  const pw = inp.value;
+  if(pw === ADMIN_PW){
     // Mevcut kullanıcıyı admin yap
-    isAdmin=true;
-    if(curUser) curUser.role='admin';
-    document.getElementById('adminNavBtn').style.display='flex';
-    document.getElementById('mobAdminBtn').style.display='flex';
-    document.getElementById('adminBar').style.display='flex';
-    document.getElementById('adminLoginBtn').classList.add('on');
-    document.getElementById('adminLoginTxt').textContent='ADMİN ✓';
+    isAdmin = true;
+    if(curUser) curUser.role = 'admin';
+    
+    // Elementler varsa görünür yap
+    const adminNav = document.getElementById('adminNavBtn'); if(adminNav) adminNav.style.display = 'flex';
+    const mobAdmin = document.getElementById('mobAdminBtn'); if(mobAdmin) mobAdmin.style.display = 'flex';
+    const adminBar = document.getElementById('adminBar');    if(adminBar) adminBar.style.display = 'flex';
+    const loginBtn = document.getElementById('adminLoginBtn');if(loginBtn) loginBtn.classList.add('on');
+    const loginTxt = document.getElementById('adminLoginTxt');if(loginTxt) loginTxt.textContent = 'ADMİN ✓';
+    
     closeModal('adminLoginModal');
     goPage('admin');
     toast('✅ Admin girişi başarılı!','🔐');
   } else {
-    document.getElementById('adminPwErr').style.display='block';
+    if(document.getElementById('adminPwErr')) document.getElementById('adminPwErr').style.display = 'block';
   }
 }
 
-// ── KORUMA ──
-// F12 engelle
-document.addEventListener('keydown',e=>{
-  if(e.key==='F12'){ e.preventDefault(); return; }
-  // Ctrl+U, Ctrl+S
-  if((e.ctrlKey||e.metaKey)&&['u','U','s','S'].includes(e.key)){ e.preventDefault(); return; }
-  // Ctrl+Shift+I/J/C (DevTools)
-  if((e.ctrlKey||e.metaKey)&&e.shiftKey&&['i','I','j','J','c','C'].includes(e.key)){ e.preventDefault(); return; }
+// ── KORUMA VE TUŞ KONTROLLERİ ──
+document.addEventListener('keydown', e => {
+  // EĞER KULLANICI BİR INPUT, TEXTAREA VEYA SELECT ELEMANINDA YAZI YAZIYORSA KISAYOLLARI DEVRE DIŞI BIRAK (KİLİTLENMEYİ ÖNLER)
+  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
 
-  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT') return;
+  if(e.key === 'F12'){ e.preventDefault(); return; }
+  // Ctrl+U, Ctrl+S
+  if((e.ctrlKey || e.metaKey) && ['u','U','s','S'].includes(e.key)){ e.preventDefault(); return; }
+  // Ctrl+Shift+I/J/C (DevTools)
+  if((e.ctrlKey || e.metaKey) && e.shiftKey && ['i','I','j','J','c','C'].includes(e.key)){ e.preventDefault(); return; }
+
   switch(e.code){
     case 'Space': e.preventDefault(); togglePlay(); break;
     case 'KeyF': doFS(); break;
@@ -2920,15 +2930,17 @@ document.addEventListener('keydown',e=>{
     case 'KeyP': doPiP(); break;
     case 'KeyN': nextCh(1); break;
     case 'KeyB': nextCh(-1); break;
-    case 'ArrowUp': e.preventDefault(); { const v=document.getElementById('mainVid'); v.volume=Math.min(1,v.volume+.05); document.querySelector('.vol-slider').value=v.volume*100; } break;
-    case 'ArrowDown': e.preventDefault(); { const v=document.getElementById('mainVid'); v.volume=Math.max(0,v.volume-.05); document.querySelector('.vol-slider').value=v.volume*100; } break;
+    case 'ArrowUp': e.preventDefault(); { const v = document.getElementById('mainVid'); if(v){ v.volume = Math.min(1, v.volume + .05); const s = document.querySelector('.vol-slider'); if(s) s.value = v.volume * 100; } } break;
+    case 'ArrowDown': e.preventDefault(); { const v = document.getElementById('mainVid'); if(v){ v.volume = Math.max(0, v.volume - .05); const s = document.querySelector('.vol-slider'); if(s) s.value = v.volume * 100; } } break;
   }
 });
+
 function nextCh(dir){
-  const all=merged(); if(!all.length) return;
-  const idx=curCh?all.findIndex(c=>c.id===curCh.id):-1;
-  let n=idx+dir; if(n<0) n=all.length-1; if(n>=all.length) n=0;
-  goChannel(all[n]);
+  if(typeof merged !== 'function') return;
+  const all = merged(); if(!all || !all.length) return;
+  const idx = (typeof curCh !== 'undefined' && curCh) ? all.findIndex(c => c.id === curCh.id) : -1;
+  let n = idx + dir; if(n < 0) n = all.length - 1; if(n >= all.length) n = 0;
+  if(typeof goChannel === 'function') goChannel(all[n]);
 }
 
 // Sağ tık engelle
@@ -2936,13 +2948,13 @@ document.addEventListener('contextmenu', e => e.preventDefault());
 
 // Metin seçimi engelle (input/textarea hariç)
 document.addEventListener('selectstart', e => {
-  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
   e.preventDefault();
 });
 
 // Kopyalamayı engelle
 document.addEventListener('copy', e => {
-  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
   e.preventDefault();
 });
 
@@ -2957,61 +2969,62 @@ setTimeout(function warn(){
   }catch{}
   setTimeout(warn, 2000);
 }, 1000);
-  function clickRealCat(index, currentBtn) {
-    // 1. Oynatıcı barındaki diğer butonların aktifliğini (mavi rengini) kaldır, tıklanana ver
-    document.querySelectorAll('#playerCats .cat-pill').forEach(b => b.classList.remove('on'));
-    currentBtn.classList.add('on');
 
-    // 2. Sol tarafta gizli duran asıl kategorileri bul ve ilgili olanına sanal olarak tıklat
-    const realCats = document.querySelectorAll('#sbCats .cat-pill');
-    if (realCats && realCats[index]) {
-        realCats[index].click();
-    }
+// ── KATEGORİ SENKRONİZASYONU VE OYNATICI BAR AYARLARI ──
+function clickRealCat(index, currentBtn) {
+  if(!currentBtn) return;
+  document.querySelectorAll('#playerCats .cat-pill').forEach(b => b.classList.remove('on'));
+  currentBtn.classList.add('on');
+
+  const realCats = document.querySelectorAll('#sbCats .cat-pill');
+  if (realCats && realCats[index]) {
+    realCats[index].click();
+  }
 }
-  function syncPlayerCategories() {
-    const realCatsContainer = document.getElementById('sbCats');
-    const playerCatsContainer = document.getElementById('playerCats');
+
+function syncPlayerCategories() {
+  const realCatsContainer = document.getElementById('sbCats');
+  const playerCatsContainer = document.getElementById('playerCats');
+  
+  if (!realCatsContainer || !playerCatsContainer) return;
+  playerCatsContainer.innerHTML = '';
+
+  const realButtons = realCatsContainer.querySelectorAll('.cat-pill');
+  realButtons.forEach((btn, index) => {
+    const newBtn = document.createElement('button');
+    newBtn.className = btn.className;
+    newBtn.textContent = btn.textContent;
+    newBtn.style.cssText = "height: 22px !important; padding: 0 10px !important; font-size: 11px !important; line-height: 1 !important; color: #fff !important; flex-shrink: 0 !important; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; cursor: pointer; transition: all 0.2s;";
     
-    if (!realCatsContainer || !playerCatsContainer) return;
-    playerCatsContainer.innerHTML = '';
+    if(btn.classList.contains('on')) {
+      newBtn.classList.add('on');
+      newBtn.style.background = "rgba(0, 212, 255, 0.25)";
+      newBtn.style.borderColor = "var(--acc)";
+    }
 
-    const realButtons = realCatsContainer.querySelectorAll('.cat-pill');
-    realButtons.forEach((btn) => {
-        const newBtn = document.createElement('button');
-        newBtn.className = btn.className;
-        newBtn.textContent = btn.textContent;
-        newBtn.style.cssText = "height: 22px !important; padding: 0 10px !important; font-size: 11px !important; line-height: 1 !important; color: #fff !important; flex-shrink: 0 !important; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; cursor: pointer; transition: all 0.2s;";
-        
-        if(btn.classList.contains('on')) {
-            newBtn.style.background = "rgba(0, 212, 255, 0.25)";
-            newBtn.style.borderColor = "var(--acc)";
-        }
-
-        newBtn.onclick = function() {
-            document.querySelectorAll('#playerCats .cat-pill').forEach(b => {
-                b.style.background = "rgba(255,255,255,0.1)";
-                b.style.borderColor = "rgba(255,255,255,0.2)";
-            });
-            newBtn.style.background = "rgba(0, 212, 255, 0.25)";
-            newBtn.style.borderColor = "var(--acc)";
-            btn.click();
-        };
-        playerCatsContainer.appendChild(newBtn);
-    });
+    newBtn.onclick = function() {
+      clickRealCat(index, newBtn);
+    };
+    playerCatsContainer.appendChild(newBtn);
+  });
 }
 
-const catObserver = new MutationObserver(() => {
-    syncPlayerCategories();
+// Döngüsel tetiklenmeyi engellemek için sadece childList takibi yapıyoruz
+const catObserver = new MutationObserver((mutations) => {
+  let shouldSync = false;
+  mutations.forEach(m => {
+    if(m.type === 'childList') shouldSync = true;
+  });
+  if(shouldSync) syncPlayerCategories();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    const targetNode = document.getElementById('sbCats');
-    if (targetNode) {
-        catObserver.observe(targetNode, { childList: true, subtree: true });
-        syncPlayerCategories();
-    }
+  const targetNode = document.getElementById('sbCats');
+  if (targetNode) {
+    catObserver.observe(targetNode, { childList: true });
+    syncPlayerCategories();
+  }
 });
-</script>
 </body>
 </html>
 </html>
