@@ -320,11 +320,11 @@ input,select{font-family:var(--fb);}
 
 #mainVid {
   width: 100% !important;
-  /* Alt taraftaki çift katmanlı barın yüksekliği (yaklaşık 90px) kadar alanı videodan düşüyoruz */
-  height: calc(100% - 90px) !important; 
+  /* İnce play barının yüksekliği (30px) kadar boşluk bırakıp videoyu tam ekrana yayıyoruz */
+  height: calc(100% - 30px) !important; 
   object-fit: fill !important; 
   background: #000;
-  align-self: flex-start; /* Videonun üst sınıra tam sıfır başlamasını sağlar */
+  align-self: flex-start;
 }
 
 .p-empty {
