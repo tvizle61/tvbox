@@ -1279,12 +1279,13 @@ input,select{font-family:var(--fb);}
   <div style="width: 1px; height: 16px; background: rgba(255,255,255,0.15); margin: 0 4px; flex-shrink: 0;"></div>
 
   <!-- 5. Kategoriler (Oyuncu barının içerisine, butonların hemen sağına taşındı) -->
+  <!-- 5. Kategoriler (Tıklama Özelliği İle Güncellendi) -->
   <div class="p-cats-bar" id="playerCats" style="display: flex !important; gap: 6px !important; overflow-x: auto !important; height: 24px !important; align-items: center !important; flex: 1 !important;">
-    <button class="cat-pill on" style="height: 22px !important; padding: 0 10px !important; font-size: 11px !important; line-height: 1 !important; color: #fff !important;">Tümü</button>
-    <button class="cat-pill" style="height: 22px !important; padding: 0 10px !important; font-size: 11px !important; line-height: 1 !important; color: #fff !important;">İnfo</button>
-    <button class="cat-pill" style="height: 22px !important; padding: 0 10px !important; font-size: 11px !important; line-height: 1 !important; color: #fff !important;">Spor-Diğer</button>
-    <button class="cat-pill" style="height: 22px !important; padding: 0 10px !important; font-size: 11px !important; line-height: 1 !important; color: #fff !important;">Spor-İnve</button>
-    <button class="cat-pill" style="height: 22px !important; padding: 0 10px !important; font-size: 11px !important; line-height: 1 !important; color: #fff !important;">Spor-Eğn</button>
+    <button class="cat-pill on" onclick="clickRealCat(0, this)" style="height: 22px !important; padding: 0 10px !important; font-size: 11px !important; line-height: 1 !important; color: #fff !important;">Tümü</button>
+    <button class="cat-pill" onclick="clickRealCat(1, this)" style="height: 22px !important; padding: 0 10px !important; font-size: 11px !important; line-height: 1 !important; color: #fff !important;">İnfo</button>
+    <button class="cat-pill" onclick="clickRealCat(2, this)" style="height: 22px !important; padding: 0 10px !important; font-size: 11px !important; line-height: 1 !important; color: #fff !important;">Spor-Diğer</button>
+    <button class="cat-pill" onclick="clickRealCat(3, this)" style="height: 22px !important; padding: 0 10px !important; font-size: 11px !important; line-height: 1 !important; color: #fff !important;">Spor-İnve</button>
+    <button class="cat-pill" onclick="clickRealCat(4, this)" style="height: 22px !important; padding: 0 10px !important; font-size: 11px !important; line-height: 1 !important; color: #fff !important;">Spor-Eğn</button>
   </div>
 
   <!-- Sağ taraftaki Canlı Logosu / Boşluk dengeleyici -->
