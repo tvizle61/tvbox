@@ -1138,6 +1138,15 @@ input,select{font-family:var(--fb);}
         
         <div class="p-ov-bot">
           <div class="p-prog"><div class="p-prog-fill"></div></div>
+          <!-- YENİ EKLENEN KATEGORİ BAR -->
+  <div class="p-cats-bar">
+    <button class="cat-pill on">Tümü</button>
+    <button class="cat-pill">İnfo</button>
+    <button class="cat-pill">Spor-Diğer</button>
+    <button class="cat-pill">Spor-İnve</button>
+    <button class="cat-pill">Spor-Eğn</button>
+  </div>
+  <!-- BAR SONU -->
           <div class="p-ctrls">
             <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
               <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -2863,3 +2872,29 @@ setTimeout(function warn(){
 </body>
 </html>
 </html>
+/* Oyuncu içi kategori barı stilleri */
+.p-cats-bar {
+  display: flex; 
+  gap: 6px; 
+  overflow-x: auto; 
+  margin-bottom: 10px; 
+  padding-bottom: 5px;
+}
+.p-cats-bar::-webkit-scrollbar { display: none; }
+
+.p-ov-bot .cat-pill {
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.p-ov-bot .cat-pill.on {
+  background: var(--acc);
+  border-color: var(--acc);
+  color: #000;
+}
