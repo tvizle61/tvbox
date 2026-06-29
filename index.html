@@ -1141,7 +1141,6 @@ input,select{font-family:var(--fb);}
   <!-- 1. İlerleme Çubuğu -->
   <div class="p-prog"><div class="p-prog-fill"></div></div>
   
-  <!-- 2. Kategori Bar (Artık geniş ve ayrı satırda) -->
   <div class="p-cats-bar">
     <button class="cat-pill on">Tümü</button>
     <button class="cat-pill">İnfo</button>
@@ -1149,8 +1148,6 @@ input,select{font-family:var(--fb);}
     <button class="cat-pill">Spor-İnve</button>
     <button class="cat-pill">Spor-Eğn</button>
   </div>
-
-  <!-- 3. Butonlar (Otomatik olarak aşağı kayacaktır) -->
   <div class="p-ctrls">
      ...
   </div>
@@ -2879,21 +2876,16 @@ setTimeout(function warn(){
 </body>
 </html>
 </html>
-* Oyuncu içi kategori barı stilleri */
-
+/* Oyuncu içi kategori barı stilleri */
 .p-cats-bar {
-
   display: flex; 
-
   gap: 6px; 
-
   overflow-x: auto; 
-
   margin-bottom: 10px; 
-
   padding-bottom: 5px;
-
 }
+.p-cats-bar::-webkit-scrollbar { display: none; }
+
 .p-ov-bot .cat-pill {
   border: 1px solid rgba(255,255,255,0.2);
   background: rgba(0,0,0,0.4);
