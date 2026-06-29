@@ -2879,27 +2879,21 @@ setTimeout(function warn(){
 </body>
 </html>
 </html>
-/* Kategori barının tam genişlikte ve ayrı bir satırda olması için */
+* Oyuncu içi kategori barı stilleri */
+
 .p-cats-bar {
+
   display: flex; 
+
   gap: 6px; 
+
   overflow-x: auto; 
+
   margin-bottom: 10px; 
-  width: 100%;      /* Tam genişlik */
-  padding: 0 16px;  /* Kenarlardan boşluk */
-  box-sizing: border-box;
+
+  padding-bottom: 5px;
+
 }
-
-/* Kapsayıcıyı dikey (alt alta) dizilime zorluyoruz */
-.p-ov-bot {
-  display: flex;
-  flex-direction: column; /* Önemli: Öğeleri alt alta dizer */
-}
-
-/* Kaydırma çubuğunu temiz ve gizli tutalım */
-.p-cats-bar::-webkit-scrollbar { display: none; }
-.p-cats-bar::-webkit-scrollbar { display: none; }
-
 .p-ov-bot .cat-pill {
   border: 1px solid rgba(255,255,255,0.2);
   background: rgba(0,0,0,0.4);
