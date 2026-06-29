@@ -1137,50 +1137,53 @@ input,select{font-family:var(--fb);}
         </div>
         
         <div class="p-ov-bot">
-          <div class="p-prog"><div class="p-prog-fill"></div></div>
-          <!-- YENİ EKLENEN KATEGORİ BAR -->
-  <div class="p-cats-bar">
+  <!-- 1. KATEGORİ BAR: En üste alındı -->
+  <div class="p-cats-bar" id="playerCats">
     <button class="cat-pill on">Tümü</button>
     <button class="cat-pill">İnfo</button>
     <button class="cat-pill">Spor-Diğer</button>
     <button class="cat-pill">Spor-İnve</button>
     <button class="cat-pill">Spor-Eğn</button>
   </div>
-  <!-- BAR SONU -->
-          <div class="p-ctrls">
-               <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
-              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </button>
-            
-            <div class="p-bar-integrated-btns" style="display: flex; align-items: center; gap: 6px; margin-left: 5px; margin-right: 5px;">
-            <button class="pcb p-bar-btn" onclick="restartStream()" title="Yenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px;"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg></button>
-              <button class="pcb p-bar-btn" onclick="doFS()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:26px; height:26px;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
-            </div>
-            
-            <div class="vol-wrap">
-              <button onclick="toggleMute()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
-              <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setVol(this.value)">
-              <span class="vol-pct" id="volPct">100%</span>
-            </div>
-            
-            <div class="p-qual-wrap">
-              <button class="p-qual-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><span id="qualLabel">OTO</span></button>
-              <div class="p-qual-drop">
-                <button class="p-qual-item on" onclick="setQual(-1)">Otomatik</button>
-                <button class="p-qual-item" onclick="setQual(1080)">1080p HD</button>
-                <button class="p-qual-item" onclick="setQual(720)">720p HD</button>
-                <button class="p-qual-item" onclick="setQual(480)">480p</button>
-                <button class="p-qual-item" onclick="setQual(360)">360p</button>
-              </div>
-            </div>
 
-            <button class="btn btn-g" onclick="openModal('addChModal')" style="margin-left: 10px; height: 32px; padding: 0 12px; font-size: 12px; font-weight: bold;">+ KANAL</button>
-            <button class="btn btn-g" onclick="openModal('m3uModal')" style="margin-left: 6px; height: 32px; padding: 0 12px; font-size: 12px; font-weight: bold;">M3U YÜKLE</button>
+  <!-- 2. İLERLEME ÇUBUĞU: Ortaya alındı -->
+  <div class="p-prog"><div class="p-prog-fill"></div></div>
 
-            <div class="p-spc"></div>
-            <span class="p-time" id="pTime">🔴 CANLI</span>
-          </div>
-        </div>
+  <!-- 3. KONTROL BUTONLARI: En alta alındı -->
+  <div class="p-ctrls">
+    <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    </button>
+    
+    <div class="p-bar-integrated-btns" style="display: flex; align-items: center; gap: 6px; margin-left: 5px; margin-right: 5px;">
+      <button class="pcb p-bar-btn" onclick="restartStream()" title="Yenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px;"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg></button>
+      <button class="pcb p-bar-btn" onclick="doFS()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:26px; height:26px;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
+    </div>
+    
+    <div class="vol-wrap">
+      <button onclick="toggleMute()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+      <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setVol(this.value)">
+      <span class="vol-pct" id="volPct">100%</span>
+    </div>
+    
+    <div class="p-qual-wrap">
+      <button class="p-qual-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><span id="qualLabel">OTO</span></button>
+      <div class="p-qual-drop">
+        <button class="p-qual-item on" onclick="setQual(-1)">Otomatik</button>
+        <button class="p-qual-item" onclick="setQual(1080)">1080p HD</button>
+        <button class="p-qual-item" onclick="setQual(720)">720p HD</button>
+        <button class="p-qual-item" onclick="setQual(480)">480p</button>
+        <button class="p-qual-item" onclick="setQual(360)">360p</button>
+      </div>
+    </div>
+
+    <button class="btn btn-g" onclick="openModal('addChModal')" style="margin-left: 10px; height: 32px; padding: 0 12px; font-size: 12px; font-weight: bold;">+ KANAL</button>
+    <button class="btn btn-g" onclick="openModal('m3uModal')" style="margin-left: 6px; height: 32px; padding: 0 12px; font-size: 12px; font-weight: bold;">M3U YÜKLE</button>
+
+    <div class="p-spc"></div>
+    <span class="p-time" id="pTime">🔴 CANLI</span>
+  </div>
+</div>
       </div>
     </div>
     
@@ -2872,37 +2875,37 @@ setTimeout(function warn(){
 </body>
 </html>
 </html>
-/* Oyuncu içi kategori barı stilleri */
-.p-cats-bar {
-  display: flex; 
-  gap: 6px; 
-  overflow-x: auto; 
-  margin-bottom: 10px; 
-  padding: 0 16px; /* Kenarlardan boşluk bırakır */
-  width: 100%;     /* Satırı tamamen kaplar */
-  order: -1;       /* Kontrollerin üzerine çıkmasını sağlar */
-}
-
-/* Sıkışmayı önlemek için kontrollerin olduğu kapsayıcıyı esnek tutuyoruz */
 .p-ov-bot {
-  display: flex;
-  flex-direction: column;
-}
-.p-cats-bar::-webkit-scrollbar { display: none; }
-
-.p-ov-bot .cat-pill {
-  border: 1px solid rgba(255,255,255,0.2);
-  background: rgba(0,0,0,0.4);
-  color: #fff;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 11px;
-  white-space: nowrap;
-  cursor: pointer;
+    display: flex !important;
+    flex-direction: column !important; /* Dikey dizilim */
+    padding: 10px !important;
+    gap: 8px !important; /* Satırlar arası boşluk */
 }
 
-.p-ov-bot .cat-pill.on {
-  background: var(--acc);
-  border-color: var(--acc);
-  color: #000;
+.p-cats-bar {
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+    padding-bottom: 5px;
 }
+
+/* Kategorilerin görünürlüğü için stil */
+.p-cats-bar .cat-pill {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.p-cats-bar .cat-pill.on {
+    background: var(--acc);
+    border-color: var(--acc);
+    color: #000;
+}
+
+/* İlerleme çubuğunu ve kontrolleri alt alta hizalar */
+.p-prog { width: 100%; margin-bottom: 5px; }
+.p-ctrls { display: flex; align-items: center; gap: 10px; }
