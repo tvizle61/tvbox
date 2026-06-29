@@ -1136,21 +1136,22 @@ input,select{font-family:var(--fb);}
           </div>
         </div>
         
-        <div class="p-ov-bot">
-  <!-- 1. KATEGORİ BAR: En üste alındı -->
-  <div class="p-cats-bar" id="playerCats">
-    <button class="cat-pill on">Tümü</button>
-    <button class="cat-pill">İnfo</button>
-    <button class="cat-pill">Spor-Diğer</button>
-    <button class="cat-pill">Spor-İnve</button>
-    <button class="cat-pill">Spor-Eğn</button>
-  </div>
-
-  <!-- 2. İLERLEME ÇUBUĞU: Ortaya alındı -->
+       <div class="p-ov-bot">
+  <!-- İlerleme çubuğu en üstte -->
   <div class="p-prog"><div class="p-prog-fill"></div></div>
 
-  <!-- 3. KONTROL BUTONLARI: En alta alındı -->
+  <!-- Kontrollerin olduğu satır -->
   <div class="p-ctrls">
+    <!-- KATEGORİLERİ BURAYA (EN BAŞA) ALDIK -->
+    <div class="p-cats-bar" id="playerCats" style="display: flex; gap: 5px; margin-right: 10px;">
+      <button class="cat-pill on">Tümü</button>
+      <button class="cat-pill">İnfo</button>
+      <button class="cat-pill">Spor-Diğer</button>
+      <button class="cat-pill">Spor-İnve</button>
+      <button class="cat-pill">Spor-Eğn</button>
+    </div>
+
+    <!-- Mevcut Butonlar -->
     <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
       <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
     </button>
@@ -1165,18 +1166,8 @@ input,select{font-family:var(--fb);}
       <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setVol(this.value)">
       <span class="vol-pct" id="volPct">100%</span>
     </div>
-    
-    <div class="p-qual-wrap">
-      <button class="p-qual-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><span id="qualLabel">OTO</span></button>
-      <div class="p-qual-drop">
-        <button class="p-qual-item on" onclick="setQual(-1)">Otomatik</button>
-        <button class="p-qual-item" onclick="setQual(1080)">1080p HD</button>
-        <button class="p-qual-item" onclick="setQual(720)">720p HD</button>
-        <button class="p-qual-item" onclick="setQual(480)">480p</button>
-        <button class="p-qual-item" onclick="setQual(360)">360p</button>
-      </div>
-    </div>
 
+    <!-- Diğer butonlar... -->
     <button class="btn btn-g" onclick="openModal('addChModal')" style="margin-left: 10px; height: 32px; padding: 0 12px; font-size: 12px; font-weight: bold;">+ KANAL</button>
     <button class="btn btn-g" onclick="openModal('m3uModal')" style="margin-left: 6px; height: 32px; padding: 0 12px; font-size: 12px; font-weight: bold;">M3U YÜKLE</button>
 
@@ -2909,3 +2900,10 @@ setTimeout(function warn(){
 /* İlerleme çubuğunu ve kontrolleri alt alta hizalar */
 .p-prog { width: 100%; margin-bottom: 5px; }
 .p-ctrls { display: flex; align-items: center; gap: 10px; }
+.p-cats-bar {
+    display: flex !important;
+    flex-direction: row !important; /* Yan yana dizilim için */
+    align-items: center !important;
+    overflow-x: auto;
+    white-space: nowrap;
+}
