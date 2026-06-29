@@ -2959,6 +2959,17 @@ setTimeout(function warn(){
   }catch{}
   setTimeout(warn, 2000);
 }, 1000);
+  function clickRealCat(index, currentBtn) {
+    // 1. Oynatıcı barındaki diğer butonların aktifliğini (mavi rengini) kaldır, tıklanana ver
+    document.querySelectorAll('#playerCats .cat-pill').forEach(b => b.classList.remove('on'));
+    currentBtn.classList.add('on');
+
+    // 2. Sol tarafta gizli duran asıl kategorileri bul ve ilgili olanına sanal olarak tıklat
+    const realCats = document.querySelectorAll('#sbCats .cat-pill');
+    if (realCats && realCats[index]) {
+        realCats[index].click();
+    }
+}
 </script>
 </body>
 </html>
