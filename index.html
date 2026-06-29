@@ -1137,10 +1137,7 @@ input,select{font-family:var(--fb);}
         </div>
         
        <div class="p-ov-bot">
-  <!-- İlerleme çubuğu en üstte -->
-  <div class="p-prog"><div class="p-prog-fill"></div></div>
-
-  <!-- KATEGORİ BARI (play tuşunun üstünde) -->
+  <!-- KATEGORİ BARI - EN ÜSTTE -->
   <div class="p-cats-container">
     <div class="p-cats-bar" id="playerCats">
       <button class="cat-pill on">Tümü</button>
@@ -1151,9 +1148,11 @@ input,select{font-family:var(--fb);}
     </div>
   </div>
 
-  <!-- Kontrollerin olduğu satır -->
+  <!-- İlerleme çubuğu -->
+  <div class="p-prog"><div class="p-prog-fill"></div></div>
+
+  <!-- Kontrollerin olduğu satır (play butonu ve diğerleri) -->
   <div class="p-ctrls">
-    <!-- Play butonu ve diğer kontroller -->
     <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
       <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
     </button>
@@ -1176,7 +1175,6 @@ input,select{font-family:var(--fb);}
     <span class="p-time" id="pTime">🔴 CANLI</span>
   </div>
 </div>
-
   <div id="pageMovies" class="sub-page">
     <div class="movie-bar">
       <span class="movie-bar-title">🎬 FİLM OYNATICI</span>
@@ -2848,12 +2846,12 @@ setTimeout(function warn(){
 </body>
 </html>
 </html>
-/* Kategori barı konteyneri - play tuşunun üstünde */
+/* Kategori barı - en üstte */
 .p-cats-container {
   width: 100%;
-  padding: 6px 12px 4px 12px;
-  background: rgba(0, 0, 0, 0.6);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   align-items: center;
   overflow-x: auto;
@@ -2874,10 +2872,10 @@ setTimeout(function warn(){
 }
 
 .cat-pill {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.7);
-  padding: 4px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 5px 16px;
   border-radius: 20px;
   font-size: 11px;
   font-weight: 600;
@@ -2886,13 +2884,13 @@ setTimeout(function warn(){
   white-space: nowrap;
   letter-spacing: 0.3px;
   text-transform: uppercase;
-  height: 28px;
+  height: 30px;
   display: flex;
   align-items: center;
 }
 
 .cat-pill:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.12);
   color: #fff;
 }
 
@@ -2903,7 +2901,23 @@ setTimeout(function warn(){
   box-shadow: 0 2px 12px rgba(229, 9, 20, 0.3);
 }
 
-/* Kontrol satırı - play butonu ve diğerleri */
+/* İlerleme çubuğu */
+.p-prog {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  position: relative;
+}
+
+.p-prog-fill {
+  height: 100%;
+  width: 0%;
+  background: #e50914;
+  transition: width 0.1s;
+}
+
+/* Kontrol satırı */
 .p-ctrls {
   display: flex;
   align-items: center;
@@ -2913,7 +2927,6 @@ setTimeout(function warn(){
   background: rgba(0, 0, 0, 0.6);
 }
 
-/* Play butonu boyutu */
 .p-play-btn {
   width: 38px;
   height: 38px;
@@ -2933,9 +2946,89 @@ setTimeout(function warn(){
 .p-play-btn svg {
   width: 20px;
   height: 20px;
+  margin-left: 3px;
 }
 
 .p-play-btn:hover {
   background: #f40612;
   transform: scale(1.05);
+}
+
+.vol-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.vol-slider {
+  width: 60px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  outline: none;
+}
+
+.vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e50914;
+  cursor: pointer;
+}
+
+.vol-pct {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 11px;
+  min-width: 35px;
+}
+
+.p-spc {
+  flex: 1;
+}
+
+.p-time {
+  color: #e50914;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.btn-g {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-g:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.pcb {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.pcb:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Diğer buton stilleri */
+button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
 }
