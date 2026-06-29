@@ -2867,39 +2867,63 @@ function saveGroupAlias(grp, newName){
 // grpEmoji'de alias kullan
 const _origGrpEmoji=grpEmoji;
 
-// ════════════════════════════════════════
-// KEYBOARD
-// ════════════════════════════════════════
-// ════════════════════════════════════════
+<script>
 // ════════════════════════════════════════
 // GLOBAL GÜVENLİK VE TANIM KONTROLLERİ (Çökmeyi Önler)
 // ════════════════════════════════════════
 if (typeof window.isAdmin === 'undefined') window.isAdmin = false;
 if (typeof window.curUser === 'undefined') window.curUser = null;
-if (typeof window.ADMIN_PW === 'undefined') window.ADMIN_PW = "1234"; // Eğer scriptinizde ADMIN_PW varsa onu kullanır, yoksa bunu baz alır.
+if (typeof window.ADMIN_PW === 'undefined') window.ADMIN_PW = "1234";
 
-// Güvenli Sayfa Geçiş Fonksiyonu
+// Geliştirilmiş Kesin Geçişli Sayfa Fonksiyonu
 function safeGoPage(pageId) {
   try {
+    // 1. Projenin orijinal goPage fonksiyonu varsa önce onu zorla çalıştır
     if (typeof goPage === 'function') {
       goPage(pageId);
+    }
+    
+    // 2. Garantiye almak için DOM üzerindeki sub-page'leri manuel olarak yönet
+    const formattedId = 'page' + pageId.charAt(0).toUpperCase() + pageId.slice(1);
+    const targetPage = document.getElementById(formattedId) || document.getElementById(pageId);
+    
+    if (targetPage) {
+      document.querySelectorAll('.sub-page').forEach(p => {
+        p.classList.remove('on');
+        p.style.display = 'none';
+      });
+      targetPage.classList.add('on');
+      targetPage.style.display = 'block';
     } else {
-      // Eğer goPage fonksiyonu isim değiştirmişse alternatifleri dene
-      const targetPage = document.getElementById('page' + pageId.charAt(0).toUpperCase() + pageId.slice(1));
-      if (targetPage) {
-        document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('on'));
-        targetPage.classList.add('on');
+      // Eğer admin paneli div'i tamamen silindiyse dinamik olarak oluştur ve göster
+      if(pageId === 'admin') {
+        let fallbackAdmin = document.getElementById('pageAdmin');
+        if(!fallbackAdmin) {
+          fallbackAdmin = document.createElement('div');
+          fallbackAdmin.id = 'pageAdmin';
+          fallbackAdmin.className = 'sub-page on';
+          fallbackAdmin.style.padding = '20px';
+          fallbackAdmin.style.color = '#fff';
+          fallbackAdmin.innerHTML = '<h2>🛠️ ADMİN PANELİ (Yedek Mod)</h2><p>Orijinal admin panel yapısı HTML içerisinde bulunamadığı için bu güvenli mod açıldı. Lütfen playlist yönetimi ve ayarlar alanınızı kontrol edin.</p>';
+          const mainPanel = document.querySelector('.main-panel');
+          if(mainPanel) mainPanel.appendChild(fallbackAdmin);
+        } else {
+          fallbackAdmin.classList.add('on');
+          fallbackAdmin.style.display = 'block';
+        }
       }
     }
-  } catch(e) { console.error("Sayfa geçiş hatası:", e); }
+  } catch(e) { 
+    console.error("Sayfa geçiş hatası detayı:", e); 
+  }
 }
 
 // Güvenli Modal Açma/Kapatma
 function safeOpenModal(modalId) {
-  try { if (typeof openModal === 'function') openModal(modalId); } catch(e) {}
+  try { if (typeof openModal === 'function') openModal(modalId); else { const m = document.getElementById(modalId); if(m) m.style.display='flex'; } } catch(e) {}
 }
 function safeCloseModal(modalId) {
-  try { if (typeof closeModal === 'function') closeModal(modalId); } catch(e) {}
+  try { if (typeof closeModal === 'function') closeModal(modalId); else { const m = document.getElementById(modalId); if(m) m.style.display='none'; } } catch(e) {}
 }
 function safeToast(msg, icon) {
   try { if (typeof toast === 'function') toast(msg, icon); else alert(msg); } catch(e) {}
@@ -2909,7 +2933,8 @@ function safeToast(msg, icon) {
 // ADMIN LOGIN İŞLEMLERİ
 // ════════════════════════════════════════
 function openAdminLogin(){
-  if(window.isAdmin){
+  if(window.isAdmin || (window.curUser && window.curUser.role === 'admin')){
+    window.isAdmin = true;
     safeGoPage('admin'); 
     return;
   }
@@ -2932,13 +2957,24 @@ function doAdminLogin(){
     window.isAdmin = true;
     if(window.curUser) window.curUser.role = 'admin';
     
-    // Elementleri görünür yap (Varsa)
-    const adminNav = document.getElementById('adminNavBtn'); if(adminNav) adminNav.style.display = 'flex';
-    const mobAdmin = document.getElementById('mobAdminBtn'); if(mobAdmin) mobAdmin.style.display = 'flex';
-    const adminBar = document.getElementById('adminBar');    if(adminBar) adminBar.style.display = 'flex';
-    const loginBtn = document.getElementById('adminLoginBtn');if(loginBtn) loginBtn.classList.add('on');
-    const loginTxt = document.getElementById('adminLoginTxt');if(loginTxt) loginTxt.textContent = 'ADMİN ✓';
+    // UI Elementlerini Aktif Et ve Görünür Yap
+    const elementsToFlex = ['adminNavBtn', 'mobAdminBtn', 'adminBar'];
+    elementsToFlex.forEach(id => {
+      const el = document.getElementById(id);
+      if(el) {
+        el.style.setProperty('display', 'flex', 'important');
+        el.removeAttribute('style' && el.style.display === 'none' ? 'style' : ''); 
+        el.style.display = 'flex';
+      }
+    });
+
+    const loginBtn = document.getElementById('adminLoginBtn'); if(loginBtn) loginBtn.classList.add('on');
+    const loginTxt = document.getElementById('adminLoginTxt'); if(loginTxt) loginTxt.textContent = 'ADMİN ✓';
     
+    // Tıklama olayını doğrudan bağla (Kilitlenmeyi önler)
+    const mobAdminBtn = document.getElementById('mobAdminBtn');
+    if(mobAdminBtn) mobAdminBtn.onclick = function() { safeGoPage('admin'); if(typeof closeDrawer === 'function') closeDrawer(); };
+
     safeCloseModal('adminLoginModal');
     safeGoPage('admin');
     safeToast('✅ Admin girişi başarılı!','🔐');
@@ -2948,9 +2984,14 @@ function doAdminLogin(){
   }
 }
 
+// Global olarak "mobGo" fonksiyonunu eziyoruz ki yönlendirme hatası vermesin
+window.mobGo = function(pageId) {
+  safeGoPage(pageId);
+  if(typeof closeDrawer === 'function') closeDrawer();
+};
+
 // ── KORUMA VE KULLANICI GİRİŞLERİNİ ENGELLEMEYEN TUŞ KONTROLLERİ ──
 document.addEventListener('keydown', e => {
-  // Aktif element bir input, textarea, select veya contenteditable ise KESİNLİKLE hiçbir tuşu engelleme (Giriş yapmayı kurtarır)
   if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT' || e.target.isContentEditable) return;
 
   if(e.key === 'F12'){ e.preventDefault(); return; }
@@ -2980,29 +3021,10 @@ function nextCh(dir){
   } catch(e) {}
 }
 
-// mouse sağ tık ve seçim korumaları (inputları muaf tutar)
-document.addEventListener('contextmenu', e => {
-  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-  e.preventDefault();
-});
-document.addEventListener('selectstart', e => {
-  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-  e.preventDefault();
-});
-document.addEventListener('copy', e => {
-  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-  e.preventDefault();
-});
+document.addEventListener('contextmenu', e => { if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return; e.preventDefault(); });
+document.addEventListener('selectstart', e => { if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return; e.preventDefault(); });
+document.addEventListener('copy', e => { if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return; e.preventDefault(); });
 document.addEventListener('dragstart', e => e.preventDefault());
-
-// Konsol uyarısı
-setTimeout(function warn(){
-  try{
-    console.warn('%c⛔ DURUN!', 'color:red;font-size:40px;font-weight:bold');
-    console.warn('%cBu alan geliştiriciler içindir. Kodu kopyalamak yasaktır.', 'color:orange;font-size:16px');
-  }catch{}
-  setTimeout(warn, 2000);
-}, 1000);
 
 // ── KATEGORİ SENKRONİZASYONU VE OYNATICI BAR AYARLARI ──
 function clickRealCat(index, currentBtn) {
@@ -3026,7 +3048,7 @@ function syncPlayerCategories() {
   const realButtons = realCatsContainer.querySelectorAll('.cat-pill');
   realButtons.forEach((btn, index) => {
     const newBtn = document.createElement('button');
-    newBtn.className = btn.className;
+    newBtn.className = btn.className || 'cat-pill';
     newBtn.textContent = btn.textContent;
     newBtn.style.cssText = "height: 22px !important; padding: 0 10px !important; font-size: 11px !important; line-height: 1 !important; color: #fff !important; flex-shrink: 0 !important; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; cursor: pointer; transition: all 0.2s;";
     
@@ -3056,7 +3078,6 @@ document.addEventListener("DOMContentLoaded", () => {
     syncPlayerCategories();
   }
 });
-  </script>
+</script>
 </body>
-</html>
 </html>
