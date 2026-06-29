@@ -153,7 +153,7 @@ input,select{font-family:var(--fb);}
 .app-body{flex:1;display:flex;overflow:hidden;}
 
 /* ══════════════════════════════════════════
-   SIDEBAR
+   SIDEBAR (BU KISIM KORUNDU)
 ══════════════════════════════════════════ */
 .sidebar{
   width:var(--sw);flex-shrink:0;
@@ -189,6 +189,96 @@ input,select{font-family:var(--fb);}
 .sb-load{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--txt3);}
 .spin{width:30px;height:30px;border:2px solid var(--bd);border-top-color:var(--acc);border-radius:50%;animation:sp .7s linear infinite;}
 @keyframes sp{to{transform:rotate(360deg)}}
+
+/* ══════════════════════════════════════════
+   YENİ EKLENEN ÇİFT KATMANLI PLAYER BARIN
+══════════════════════════════════════════ */
+.p-ov-bot {
+    display: flex !important;
+    flex-direction: column !important; /* Kategorileri ve butonları alt alta koyar */
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: rgba(7, 9, 14, 0.95) !important;
+    padding: 12px 16px !important;
+    gap: 10px !important;
+    z-index: 1000 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    transition: none !important;
+}
+
+.p-cats-bar {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    overflow-x: auto !important; /* Taşarsa sağa kaydırılabilir yapar */
+    width: 100% !important;
+    padding-bottom: 4px !important;
+}
+
+.p-cats-bar::-webkit-scrollbar {
+    height: 0px !important;
+    display: none !important;
+}
+
+.p-cats-bar .cat-pill {
+    flex-shrink: 0 !important; /* Butonların daralmasını engeller */
+    padding: 6px 12px !important;
+    border-radius: 20px !important;
+    border: 1px solid var(--bd) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: var(--txt3) !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important; /* Yazıların kırılmasını engeller */
+    cursor: pointer !important;
+    transition: all .2s !important;
+}
+
+.p-cats-bar .cat-pill:hover {
+    border-color: var(--bd2) !important;
+    color: var(--txt2) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.p-cats-bar .cat-pill.on {
+    background: var(--acc) !important;
+    border-color: var(--acc) !important;
+    color: #000 !important;
+}
+
+.p-prog {
+    width: 100% !important;
+    height: 4px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 2px !important;
+    position: relative !important;
+    cursor: pointer !important;
+}
+
+.p-prog-fill {
+    height: 100% !important;
+    background: var(--acc) !important;
+    width: 0%;
+    border-radius: 2px !important;
+}
+
+.p-ctrls {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    gap: 8px !important;
+}
+
+.p-ctrls button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
 
 /* ══════════════════════════════════════════
    MAIN PANEL
@@ -1136,44 +1226,62 @@ input,select{font-family:var(--fb);}
           </div>
         </div>
         
-       <div class="p-ov-bot">
-  <!-- KATEGORİ BARI - EN ÜSTTE -->
-  <div class="p-cats-container">
-    <div class="p-cats-bar" id="playerCats">
-      <button class="cat-pill on">Tümü</button>
-      <button class="cat-pill">İnfo</button>
-      <button class="cat-pill">Spor-Diğer</button>
-      <button class="cat-pill">Spor-İnve</button>
-      <button class="cat-pill">Spor-Eğn</button>
-    </div>
+       <div class="p-ov-bot" style="display: flex !important; flex-direction: column !important; background: rgba(0, 0, 0, 0.85) !important; padding: 10px !important; gap: 8px !important;">
+  
+  <!-- 1. ÜST BAR: Sadece Kategoriler -->
+  <div class="p-cats-bar" id="playerCats" style="display: flex !important; gap: 6px !important; overflow-x: auto !important; padding: 4px 0 !important; width: 100% !important;">
+    <button class="cat-pill on">Tümü</button>
+    <button class="cat-pill">İnfo</button>
+    <button class="cat-pill">Spor-Diğer</button>
+    <button class="cat-pill">Spor-İnve</button>
+    <button class="cat-pill">Spor-Eğn</button>
   </div>
 
-  <!-- İlerleme çubuğu -->
-  <div class="p-prog"><div class="p-prog-fill"></div></div>
+  <!-- Ortadaki İlerleme Çubuğu -->
+  <div class="p-prog" style="width: 100% !important;"><div class="p-prog-fill"></div></div>
 
-  <!-- Kontrollerin olduğu satır (play butonu ve diğerleri) -->
-  <div class="p-ctrls">
+  <!-- 2. ALT BAR: Play Tuşu, Ses, Kanal Ekleme vb. -->
+  <div class="p-ctrls" style="display: flex !important; align-items: center !important; width: 100% !important; gap: 10px !important;">
+    
+    <!-- Play Butonu -->
     <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
-      <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px; height:16px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
     </button>
     
-    <div class="p-bar-integrated-btns" style="display: flex; align-items: center; gap: 6px; margin-left: 5px; margin-right: 5px;">
+    <!-- Yenile ve Tam Ekran -->
+    <div class="p-bar-integrated-btns" style="display: flex; align-items: center; gap: 6px;">
       <button class="pcb p-bar-btn" onclick="restartStream()" title="Yenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px;"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg></button>
-      <button class="pcb p-bar-btn" onclick="doFS()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:26px; height:26px;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
+      <button class="pcb p-bar-btn" onclick="doFS()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
     </div>
     
-    <div class="vol-wrap">
-      <button onclick="toggleMute()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+    <!-- Ses Kısmı -->
+    <div class="vol-wrap" style="display: flex; align-items: center; gap: 5px;">
+      <button onclick="toggleMute()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
       <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setVol(this.value)">
       <span class="vol-pct" id="volPct">100%</span>
     </div>
+    
+    <!-- Kalite Seçimi -->
+    <div class="p-qual-wrap">
+      <button class="p-qual-btn" style="display: flex; align-items: center; gap: 4px; font-size: 11px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px; height:14px;"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><span id="qualLabel">OTO</span></button>
+      <div class="p-qual-drop">
+        <button class="p-qual-item on" onclick="setQual(-1)">Otomatik</button>
+        <button class="p-qual-item" onclick="setQual(1080)">1080p HD</button>
+        <button class="p-qual-item" onclick="setQual(720)">720p HD</button>
+        <button class="p-qual-item" onclick="setQual(480)">480p</button>
+        <button class="p-qual-item" onclick="setQual(360)">360p</button>
+      </div>
+    </div>
 
-    <button class="btn btn-g" onclick="openModal('addChModal')" style="margin-left: 10px; height: 32px; padding: 0 12px; font-size: 12px; font-weight: bold;">+ KANAL</button>
-    <button class="btn btn-g" onclick="openModal('m3uModal')" style="margin-left: 6px; height: 32px; padding: 0 12px; font-size: 12px; font-weight: bold;">M3U YÜKLE</button>
+    <!-- Kanal ve M3U Butonları -->
+    <button class="btn btn-g" onclick="openModal('addChModal')" style="height: 28px; padding: 0 10px; font-size: 11px; font-weight: bold;">+ KANAL</button>
+    <button class="btn btn-g" onclick="openModal('m3uModal')" style="height: 28px; padding: 0 10px; font-size: 11px; font-weight: bold;">M3U YÜKLE</button>
 
-    <div class="p-spc"></div>
-    <span class="p-time" id="pTime">🔴 CANLI</span>
+    <!-- Sağa Yaslama Boşluğu ve Canlı Yazısı -->
+    <div class="p-spc" style="flex: 1;"></div>
+    <span class="p-time" id="pTime" style="font-size: 11px;">🔴 CANLI</span>
   </div>
+
 </div>
   <div id="pageMovies" class="sub-page">
     <div class="movie-bar">
@@ -2846,189 +2954,3 @@ setTimeout(function warn(){
 </body>
 </html>
 </html>
-/* Kategori barı - en üstte */
-.p-cats-container {
-  width: 100%;
-  padding: 8px 12px;
-  background: rgba(0, 0, 0, 0.7);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  display: flex;
-  align-items: center;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.p-cats-container::-webkit-scrollbar {
-  display: none;
-}
-
-.p-cats-bar {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  flex-wrap: nowrap;
-  width: 100%;
-}
-
-.cat-pill {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.6);
-  padding: 5px 16px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
-  height: 30px;
-  display: flex;
-  align-items: center;
-}
-
-.cat-pill:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-}
-
-.cat-pill.on {
-  background: #e50914;
-  border-color: #e50914;
-  color: #fff;
-  box-shadow: 0 2px 12px rgba(229, 9, 20, 0.3);
-}
-
-/* İlerleme çubuğu */
-.p-prog {
-  width: 100%;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.15);
-  cursor: pointer;
-  position: relative;
-}
-
-.p-prog-fill {
-  height: 100%;
-  width: 0%;
-  background: #e50914;
-  transition: width 0.1s;
-}
-
-/* Kontrol satırı */
-.p-ctrls {
-  display: flex;
-  align-items: center;
-  padding: 6px 12px 8px 12px;
-  gap: 6px;
-  flex-wrap: wrap;
-  background: rgba(0, 0, 0, 0.6);
-}
-
-.p-play-btn {
-  width: 38px;
-  height: 38px;
-  min-width: 38px;
-  border-radius: 50%;
-  background: #e50914;
-  border: none;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  padding: 0;
-}
-
-.p-play-btn svg {
-  width: 20px;
-  height: 20px;
-  margin-left: 3px;
-}
-
-.p-play-btn:hover {
-  background: #f40612;
-  transform: scale(1.05);
-}
-
-.vol-wrap {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.vol-slider {
-  width: 60px;
-  height: 4px;
-  -webkit-appearance: none;
-  appearance: none;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 2px;
-  outline: none;
-}
-
-.vol-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #e50914;
-  cursor: pointer;
-}
-
-.vol-pct {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 11px;
-  min-width: 35px;
-}
-
-.p-spc {
-  flex: 1;
-}
-
-.p-time {
-  color: #e50914;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-.btn-g {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-g:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.pcb {
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.6);
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s;
-}
-
-.pcb:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.08);
-}
-
-/* Diğer buton stilleri */
-button {
-  background: transparent;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-}
