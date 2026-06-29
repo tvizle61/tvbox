@@ -2871,63 +2871,98 @@ const _origGrpEmoji=grpEmoji;
 // KEYBOARD
 // ════════════════════════════════════════
 // ════════════════════════════════════════
-// ADMIN LOGIN (ayrı buton)
+// ════════════════════════════════════════
+// GLOBAL GÜVENLİK VE TANIM KONTROLLERİ (Çökmeyi Önler)
+// ════════════════════════════════════════
+if (typeof window.isAdmin === 'undefined') window.isAdmin = false;
+if (typeof window.curUser === 'undefined') window.curUser = null;
+if (typeof window.ADMIN_PW === 'undefined') window.ADMIN_PW = "1234"; // Eğer scriptinizde ADMIN_PW varsa onu kullanır, yoksa bunu baz alır.
+
+// Güvenli Sayfa Geçiş Fonksiyonu
+function safeGoPage(pageId) {
+  try {
+    if (typeof goPage === 'function') {
+      goPage(pageId);
+    } else {
+      // Eğer goPage fonksiyonu isim değiştirmişse alternatifleri dene
+      const targetPage = document.getElementById('page' + pageId.charAt(0).toUpperCase() + pageId.slice(1));
+      if (targetPage) {
+        document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('on'));
+        targetPage.classList.add('on');
+      }
+    }
+  } catch(e) { console.error("Sayfa geçiş hatası:", e); }
+}
+
+// Güvenli Modal Açma/Kapatma
+function safeOpenModal(modalId) {
+  try { if (typeof openModal === 'function') openModal(modalId); } catch(e) {}
+}
+function safeCloseModal(modalId) {
+  try { if (typeof closeModal === 'function') closeModal(modalId); } catch(e) {}
+}
+function safeToast(msg, icon) {
+  try { if (typeof toast === 'function') toast(msg, icon); else alert(msg); } catch(e) {}
+}
+
+// ════════════════════════════════════════
+// ADMIN LOGIN İŞLEMLERİ
 // ════════════════════════════════════════
 function openAdminLogin(){
-  if(isAdmin){
-    // Zaten admin — panele git
-    goPage('admin'); return;
+  if(window.isAdmin){
+    safeGoPage('admin'); 
+    return;
   }
-  if(document.getElementById('adminPwErr')) document.getElementById('adminPwErr').style.display='none';
-  if(document.getElementById('adminPwInput')) document.getElementById('adminPwInput').value='';
-  openModal('adminLoginModal');
+  const errEl = document.getElementById('adminPwErr'); if(errEl) errEl.style.display='none';
+  const inpEl = document.getElementById('adminPwInput'); if(inpEl) inpEl.value='';
+  
+  safeOpenModal('adminLoginModal');
   setTimeout(()=>{
     const inp = document.getElementById('adminPwInput');
     if(inp) inp.focus();
-  },200);
+  }, 200);
 }
 
 function doAdminLogin(){
   const inp = document.getElementById('adminPwInput');
   if(!inp) return;
   const pw = inp.value;
-  if(pw === ADMIN_PW){
-    // Mevcut kullanıcıyı admin yap
-    isAdmin = true;
-    if(curUser) curUser.role = 'admin';
+  
+  if(pw === window.ADMIN_PW){
+    window.isAdmin = true;
+    if(window.curUser) window.curUser.role = 'admin';
     
-    // Elementler varsa görünür yap
+    // Elementleri görünür yap (Varsa)
     const adminNav = document.getElementById('adminNavBtn'); if(adminNav) adminNav.style.display = 'flex';
     const mobAdmin = document.getElementById('mobAdminBtn'); if(mobAdmin) mobAdmin.style.display = 'flex';
     const adminBar = document.getElementById('adminBar');    if(adminBar) adminBar.style.display = 'flex';
     const loginBtn = document.getElementById('adminLoginBtn');if(loginBtn) loginBtn.classList.add('on');
     const loginTxt = document.getElementById('adminLoginTxt');if(loginTxt) loginTxt.textContent = 'ADMİN ✓';
     
-    closeModal('adminLoginModal');
-    goPage('admin');
-    toast('✅ Admin girişi başarılı!','🔐');
+    safeCloseModal('adminLoginModal');
+    safeGoPage('admin');
+    safeToast('✅ Admin girişi başarılı!','🔐');
   } else {
-    if(document.getElementById('adminPwErr')) document.getElementById('adminPwErr').style.display = 'block';
+    const errEl = document.getElementById('adminPwErr');
+    if(errEl) errEl.style.display = 'block';
   }
 }
 
-// ── KORUMA VE TUŞ KONTROLLERİ ──
+// ── KORUMA VE KULLANICI GİRİŞLERİNİ ENGELLEMEYEN TUŞ KONTROLLERİ ──
 document.addEventListener('keydown', e => {
-  // EĞER KULLANICI BİR INPUT, TEXTAREA VEYA SELECT ELEMANINDA YAZI YAZIYORSA KISAYOLLARI DEVRE DIŞI BIRAK (KİLİTLENMEYİ ÖNLER)
-  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+  // Aktif element bir input, textarea, select veya contenteditable ise KESİNLİKLE hiçbir tuşu engelleme (Giriş yapmayı kurtarır)
+  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT' || e.target.isContentEditable) return;
 
   if(e.key === 'F12'){ e.preventDefault(); return; }
-  // Ctrl+U, Ctrl+S
   if((e.ctrlKey || e.metaKey) && ['u','U','s','S'].includes(e.key)){ e.preventDefault(); return; }
-  // Ctrl+Shift+I/J/C (DevTools)
   if((e.ctrlKey || e.metaKey) && e.shiftKey && ['i','I','j','J','c','C'].includes(e.key)){ e.preventDefault(); return; }
 
   switch(e.code){
-    case 'Space': e.preventDefault(); togglePlay(); break;
-    case 'KeyF': doFS(); break;
-    case 'KeyM': toggleMute(); break;
-    case 'KeyR': restartStream(); break;
-    case 'KeyP': doPiP(); break;
+    case 'Space': e.preventDefault(); if(typeof togglePlay === 'function') togglePlay(); break;
+    case 'KeyF': if(typeof doFS === 'function') doFS(); break;
+    case 'KeyM': if(typeof toggleMute === 'function') toggleMute(); break;
+    case 'KeyR': if(typeof restartStream === 'function') restartStream(); break;
+    case 'KeyP': if(typeof doPiP === 'function') doPiP(); break;
     case 'KeyN': nextCh(1); break;
     case 'KeyB': nextCh(-1); break;
     case 'ArrowUp': e.preventDefault(); { const v = document.getElementById('mainVid'); if(v){ v.volume = Math.min(1, v.volume + .05); const s = document.querySelector('.vol-slider'); if(s) s.value = v.volume * 100; } } break;
@@ -2937,28 +2972,27 @@ document.addEventListener('keydown', e => {
 
 function nextCh(dir){
   if(typeof merged !== 'function') return;
-  const all = merged(); if(!all || !all.length) return;
-  const idx = (typeof curCh !== 'undefined' && curCh) ? all.findIndex(c => c.id === curCh.id) : -1;
-  let n = idx + dir; if(n < 0) n = all.length - 1; if(n >= all.length) n = 0;
-  if(typeof goChannel === 'function') goChannel(all[n]);
+  try {
+    const all = merged(); if(!all || !all.length) return;
+    const idx = (typeof curCh !== 'undefined' && curCh) ? all.findIndex(c => c.id === curCh.id) : -1;
+    let n = idx + dir; if(n < 0) n = all.length - 1; if(n >= all.length) n = 0;
+    if(typeof goChannel === 'function') goChannel(all[n]);
+  } catch(e) {}
 }
 
-// Sağ tık engelle
-document.addEventListener('contextmenu', e => e.preventDefault());
-
-// Metin seçimi engelle (input/textarea hariç)
+// mouse sağ tık ve seçim korumaları (inputları muaf tutar)
+document.addEventListener('contextmenu', e => {
+  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  e.preventDefault();
+});
 document.addEventListener('selectstart', e => {
   if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
   e.preventDefault();
 });
-
-// Kopyalamayı engelle
 document.addEventListener('copy', e => {
   if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
   e.preventDefault();
 });
-
-// Sürükle-bırak engelle
 document.addEventListener('dragstart', e => e.preventDefault());
 
 // Konsol uyarısı
@@ -2978,7 +3012,7 @@ function clickRealCat(index, currentBtn) {
 
   const realCats = document.querySelectorAll('#sbCats .cat-pill');
   if (realCats && realCats[index]) {
-    realCats[index].click();
+    try { realCats[index].click(); } catch(e) {}
   }
 }
 
@@ -3009,12 +3043,9 @@ function syncPlayerCategories() {
   });
 }
 
-// Döngüsel tetiklenmeyi engellemek için sadece childList takibi yapıyoruz
 const catObserver = new MutationObserver((mutations) => {
   let shouldSync = false;
-  mutations.forEach(m => {
-    if(m.type === 'childList') shouldSync = true;
-  });
+  mutations.forEach(m => { if(m.type === 'childList') shouldSync = true; });
   if(shouldSync) syncPlayerCategories();
 });
 
@@ -3025,6 +3056,7 @@ document.addEventListener("DOMContentLoaded", () => {
     syncPlayerCategories();
   }
 });
+  </script>
 </body>
 </html>
 </html>
