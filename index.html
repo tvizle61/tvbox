@@ -1140,18 +1140,20 @@ input,select{font-family:var(--fb);}
   <!-- İlerleme çubuğu en üstte -->
   <div class="p-prog"><div class="p-prog-fill"></div></div>
 
-  <!-- Kontrollerin olduğu satır -->
-  <div class="p-ctrls">
-    <!-- KATEGORİLERİ BURAYA (EN BAŞA) ALDIK -->
-    <div class="p-cats-bar" id="playerCats" style="display: flex; gap: 5px; margin-right: 10px;">
+  <!-- KATEGORİ BARI (play tuşunun üstünde) -->
+  <div class="p-cats-container">
+    <div class="p-cats-bar" id="playerCats">
       <button class="cat-pill on">Tümü</button>
       <button class="cat-pill">İnfo</button>
       <button class="cat-pill">Spor-Diğer</button>
       <button class="cat-pill">Spor-İnve</button>
       <button class="cat-pill">Spor-Eğn</button>
     </div>
+  </div>
 
-    <!-- Mevcut Butonlar -->
+  <!-- Kontrollerin olduğu satır -->
+  <div class="p-ctrls">
+    <!-- Play butonu ve diğer kontroller -->
     <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
       <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
     </button>
@@ -1167,7 +1169,6 @@ input,select{font-family:var(--fb);}
       <span class="vol-pct" id="volPct">100%</span>
     </div>
 
-    <!-- Diğer butonlar... -->
     <button class="btn btn-g" onclick="openModal('addChModal')" style="margin-left: 10px; height: 32px; padding: 0 12px; font-size: 12px; font-weight: bold;">+ KANAL</button>
     <button class="btn btn-g" onclick="openModal('m3uModal')" style="margin-left: 6px; height: 32px; padding: 0 12px; font-size: 12px; font-weight: bold;">M3U YÜKLE</button>
 
@@ -1175,25 +1176,6 @@ input,select{font-family:var(--fb);}
     <span class="p-time" id="pTime">🔴 CANLI</span>
   </div>
 </div>
-      </div>
-    </div>
-    
-    <div class="ad-leader" id="adLeader" onclick="adLeaderClick()">
-      <span class="ad-tag">REKLAM</span>
-      <div class="ad-leader-inner" id="adLeaderInner">
-        <div class="ad-leader-placeholder">
-          <span>📢</span><span>728 × 60 — Leaderboard Banner (Admin panelinden yönet)</span>
-        </div>
-      </div>
-    </div>
-    
-    <div class="admin-bar" id="adminBar">
-      <input type="text" id="adminUrl" placeholder="Admin — URL gir (m3u8, .ts, http…)" onkeydown="if(event.key==='Enter')adminPlay()">
-      <button class="btn btn-acc" onclick="adminPlay()"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>OYNAT</button>
-      <button class="btn btn-g" onclick="openModal('addChModal')">+ KANAL</button>
-      <button class="btn btn-g" onclick="openModal('m3uModal')">M3U YÜKLE</button>
-    </div>
-  </div>
 
   <div id="pageMovies" class="sub-page">
     <div class="movie-bar">
@@ -2866,44 +2848,94 @@ setTimeout(function warn(){
 </body>
 </html>
 </html>
-.p-ov-bot {
-    display: flex !important;
-    flex-direction: column !important; /* Dikey dizilim */
-    padding: 10px !important;
-    gap: 8px !important; /* Satırlar arası boşluk */
+/* Kategori barı konteyneri - play tuşunun üstünde */
+.p-cats-container {
+  width: 100%;
+  padding: 6px 12px 4px 12px;
+  background: rgba(0, 0, 0, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.p-cats-container::-webkit-scrollbar {
+  display: none;
 }
 
 .p-cats-bar {
-    display: flex;
-    gap: 5px;
-    overflow-x: auto;
-    padding-bottom: 5px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
 }
 
-/* Kategorilerin görünürlüğü için stil */
-.p-cats-bar .cat-pill {
-    background: rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.2);
-    color: #fff;
-    padding: 4px 10px;
-    border-radius: 15px;
-    font-size: 11px;
-    white-space: nowrap;
+.cat-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  height: 28px;
+  display: flex;
+  align-items: center;
 }
 
-.p-cats-bar .cat-pill.on {
-    background: var(--acc);
-    border-color: var(--acc);
-    color: #000;
+.cat-pill:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
 }
 
-/* İlerleme çubuğunu ve kontrolleri alt alta hizalar */
-.p-prog { width: 100%; margin-bottom: 5px; }
-.p-ctrls { display: flex; align-items: center; gap: 10px; }
-.p-cats-bar {
-    display: flex !important;
-    flex-direction: row !important; /* Yan yana dizilim için */
-    align-items: center !important;
-    overflow-x: auto;
-    white-space: nowrap;
+.cat-pill.on {
+  background: #e50914;
+  border-color: #e50914;
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(229, 9, 20, 0.3);
+}
+
+/* Kontrol satırı - play butonu ve diğerleri */
+.p-ctrls {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px 8px 12px;
+  gap: 6px;
+  flex-wrap: wrap;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* Play butonu boyutu */
+.p-play-btn {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 50%;
+  background: #e50914;
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.p-play-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.p-play-btn:hover {
+  background: #f40612;
+  transform: scale(1.05);
 }
