@@ -1241,59 +1241,51 @@ input,select{font-family:var(--fb);}
        <div class="p-ov-bot" style="display: flex !important; flex-direction: column !important; background: rgba(0, 0, 0, 0.85) !important; padding: 10px !important; gap: 8px !important;">
   
   <!-- 1. ÜST BAR: Sadece Kategoriler -->
-  <div class="p-cats-bar" id="playerCats" style="display: flex !important; gap: 6px !important; overflow-x: auto !important; padding: 4px 0 !important; width: 100% !important;">
-    <button class="cat-pill on">Tümü</button>
-    <button class="cat-pill">İnfo</button>
-    <button class="cat-pill">Spor-Diğer</button>
-    <button class="cat-pill">Spor-İnve</button>
-    <button class="cat-pill">Spor-Eğn</button>
+  <!-- 1. ÜST KATMAN: Sadece Kategoriler (Tamamen Bağımsız ve Sıfıra Yakın Boşluklu) -->
+<div class="p-cats-bar" id="playerCats" style="display: flex !important; gap: 5px !important; overflow-x: auto !important; padding: 2px 10px !important; background: #07090e !important; width: 100% !important; height: 26px !important; align-items: center !important;">
+  <button class="cat-pill on" style="height: 20px !important; padding: 0 8px !important; font-size: 10px !important; line-height: 1 !important;">Tümü</button>
+  <button class="cat-pill" style="height: 20px !important; padding: 0 8px !important; font-size: 10px !important; line-height: 1 !important;">İnfo</button>
+  <button class="cat-pill" style="height: 20px !important; padding: 0 8px !important; font-size: 10px !important; line-height: 1 !important;">Spor-Diğer</button>
+  <button class="cat-pill" style="height: 20px !important; padding: 0 8px !important; font-size: 10px !important; line-height: 1 !important;">Spor-İnve</button>
+  <button class="cat-pill" style="height: 20px !important; padding: 0 8px !important; font-size: 10px !important; line-height: 1 !important;">Spor-Eğn</button>
+</div>
+
+<!-- İnce İlerleme Çubuğu -->
+<div class="p-prog" style="width: 100% !important; height: 2px !important; background: rgba(255, 255, 255, 0.1) !important; margin: 0 !important;"><div class="p-prog-fill" style="height: 100% !important; background: var(--acc) !important; width: 0%;"></div></div>
+
+<!-- 2. ALT KATMAN: Play Butonu, Ses, Ayarlar (Orijinal geniş arka plan tamamen silindi, sadece 28px yüksekliğinde) -->
+<div class="p-ctrls" style="display: flex !important; align-items: center !important; width: 100% !important; gap: 6px !important; height: 28px !important; background: #07090e !important; padding: 0 10px !important; box-sizing: border-box !important;">
+  
+  <!-- Play Butonu (Boyutu tamamen küçültüldü ve butonla eşitlendi) -->
+  <button class="p-play-btn" onclick="togglePlay()" id="playBtn" style="width: 22px !important; height: 22px !important; padding: 0 !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; border-radius: 4px !important; background: rgba(0, 212, 255, 0.2) !important; border: 1px solid var(--acc) !important;">
+    <svg viewBox="0 0 24 24" fill="currentColor" style="width:12px; height:12px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+  </button>
+  
+  <!-- Yenile ve Tam Ekran -->
+  <div class="p-bar-integrated-btns" style="display: flex; align-items: center; gap: 4px;">
+    <button class="pcb p-bar-btn" onclick="restartStream()" title="Yenile" style="height: 22px !important; padding: 0 4px !important;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px; height:13px;"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg></button>
+    <button class="pcb p-bar-btn" onclick="doFS()" title="Tam Ekran" style="height: 22px !important; padding: 0 4px !important;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px; height:15px;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
+  </div>
+  
+  <!-- Ses Kısmı -->
+  <div class="vol-wrap" style="display: flex; align-items: center; gap: 4px; height: 22px !important;">
+    <button onclick="toggleMute()" style="padding: 0 !important; height: 22px !important;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px; height:13px; color: #fff;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+    <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setVol(this.value)" style="width: 60px !important; height: 2px !important;">
+    <span class="vol-pct" id="volPct" style="font-size: 10px !important; color: rgba(255,255,255,0.7);">100%</span>
+  </div>
+  
+  <!-- Kalite Seçimi -->
+  <div class="p-qual-wrap" style="height: 22px !important;">
+    <button class="p-qual-btn" style="display: flex; align-items: center; gap: 3px; font-size: 10px; height: 22px !important; padding: 0 6px !important;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px; height:12px;"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><span id="qualLabel">OTO</span></button>
   </div>
 
-  <!-- Ortadaki İlerleme Çubuğu -->
-  <div class="p-prog" style="width: 100% !important;"><div class="p-prog-fill"></div></div>
+  <!-- Butonlar -->
+  <button class="btn btn-g" onclick="openModal('addChModal')" style="height: 22px !important; padding: 0 6px !important; font-size: 10px !important; font-weight: bold; line-height: 1 !important;">+ KANAL</button>
+  <button class="btn btn-g" onclick="openModal('m3uModal')" style="height: 22px !important; padding: 0 6px !important; font-size: 10px !important; font-weight: bold; line-height: 1 !important;">M3U YÜKLE</button>
 
-  <!-- 2. ALT BAR: Play Tuşu, Ses, Kanal Ekleme vb. -->
-  <div class="p-ctrls" style="display: flex !important; align-items: center !important; width: 100% !important; gap: 10px !important;">
-    
-    <!-- Play Butonu -->
-    <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
-      <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px; height:16px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-    </button>
-    
-    <!-- Yenile ve Tam Ekran -->
-    <div class="p-bar-integrated-btns" style="display: flex; align-items: center; gap: 6px;">
-      <button class="pcb p-bar-btn" onclick="restartStream()" title="Yenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px;"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg></button>
-      <button class="pcb p-bar-btn" onclick="doFS()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
-    </div>
-    
-    <!-- Ses Kısmı -->
-    <div class="vol-wrap" style="display: flex; align-items: center; gap: 5px;">
-      <button onclick="toggleMute()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
-      <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setVol(this.value)">
-      <span class="vol-pct" id="volPct">100%</span>
-    </div>
-    
-    <!-- Kalite Seçimi -->
-    <div class="p-qual-wrap">
-      <button class="p-qual-btn" style="display: flex; align-items: center; gap: 4px; font-size: 11px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px; height:14px;"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><span id="qualLabel">OTO</span></button>
-      <div class="p-qual-drop">
-        <button class="p-qual-item on" onclick="setQual(-1)">Otomatik</button>
-        <button class="p-qual-item" onclick="setQual(1080)">1080p HD</button>
-        <button class="p-qual-item" onclick="setQual(720)">720p HD</button>
-        <button class="p-qual-item" onclick="setQual(480)">480p</button>
-        <button class="p-qual-item" onclick="setQual(360)">360p</button>
-      </div>
-    </div>
-
-    <!-- Kanal ve M3U Butonları -->
-    <button class="btn btn-g" onclick="openModal('addChModal')" style="height: 28px; padding: 0 10px; font-size: 11px; font-weight: bold;">+ KANAL</button>
-    <button class="btn btn-g" onclick="openModal('m3uModal')" style="height: 28px; padding: 0 10px; font-size: 11px; font-weight: bold;">M3U YÜKLE</button>
-
-    <!-- Sağa Yaslama Boşluğu ve Canlı Yazısı -->
-    <div class="p-spc" style="flex: 1;"></div>
-    <span class="p-time" id="pTime" style="font-size: 11px;">🔴 CANLI</span>
-  </div>
-
+  <div class="p-spc" style="flex: 1;"></div>
+  <span class="p-time" id="pTime" style="font-size: 10px !important; color: rgba(255,255,255,0.7);">🔴 CANLI</span>
+</div>
 </div>
   <div id="pageMovies" class="sub-page">
     <div class="movie-bar">
