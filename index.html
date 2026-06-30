@@ -1156,7 +1156,8 @@ input,select{font-family:var(--fb);}
   <div class="app-body">
 
     <!-- SIDEBAR -->
-   <!-- ══ APP ══ -->
+  <!-- SIDEBAR -->
+<!-- ══ APP ══ -->
 <aside class="sidebar" id="sidebar">
   <div class="sb-search">
     <div class="sb-search-wrap">
@@ -1193,25 +1194,20 @@ input,select{font-family:var(--fb);}
       <div class="screenshot-flash" id="screenshotFlash"></div>
       <div class="auto-next-bar" id="autoNextBar"></div>
       <div class="p-ov" id="pOv">
-        <div class="p-ov-top">
-          <div class="p-ov-info">
-            <span class="p-live-badge">● CANLI</span>
-            <div>
-              <div class="p-ch-title" id="pTitle">—</div>
-              <div style="font-size:11px;color:rgba(255,255,255,.45)" id="pGrp"></div>
-            </div>
-          </div>
-        </div>
         
-        <div class="p-ov-bot">
+        <!-- ÜSTTEKİ PANEL GİZLİ -->
+        <div class="p-ov-top" style="display: none !important;"></div>
+        
+        <!-- ALT BAR TAŞIYICISI -->
+        <div class="p-ov-bot" id="customPlayerBot">
           <div class="p-prog"><div class="p-prog-fill"></div></div>
-          <!-- SAATİN SAĞA SIFIRLANMASI İÇİN ANA TAŞIYICIYA POSITION: RELATIVE VE SAĞDAN BOŞLUK VERİLDİ -->
-          <div class="p-ctrls" style="position: relative; padding-right: 140px;">
+          
+          <div class="p-ctrls" id="customPlayerCtrls">
             <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
               <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             </button>
             
-            <div class="p-bar-integrated-btns" style="display: flex; align-items: center; gap: 6px; margin-left: 5px; margin-right: 5px;">
+            <div class="p-bar-integrated-btns">
               <button class="pcb p-bar-btn" onclick="restartStream()" title="Yenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px;"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg></button>
               <button class="pcb p-bar-btn" onclick="doFS()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:26px; height:26px;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
             </div>
@@ -1239,19 +1235,81 @@ input,select{font-family:var(--fb);}
             <button class="btn btn-g" onclick="openModal('addChModal')" style="display: none !important;">+ KANAL</button>
             <button class="btn btn-g" onclick="openModal('m3uModal')" style="display: none !important;">M3U YÜKLE</button>
             
-            <!-- KATEGORİLER ALANI VE NOKTA ATIŞI BEYAZ YAZI STİLİ -->
-            <div class="sb-cats" id="sbCats" style="display: flex; gap: 5px; margin-left: 15px; margin-right: 0px; overflow-x: auto; flex: 1; white-space: nowrap;">
-              <style>
-                #sbCats button, #sbCats span, #sbCats a { 
-                  color: #ffffff !important; 
-                  opacity: 1 !important;
-                }
-              </style>
-            </div>
-                                 </div>
+            <!-- KATEGORİLER ALANI (JS TIKLAMA FONKSİYONLARINI BOZMAYACAK TEMİZ YAPI) -->
+            <div class="sb-cats" id="sbCats"></div>
+            
+            <!-- SAAT VE CANLI ALANI KALKTI -->
+
+          </div>
         </div>
       </div>
     </div>
+    
+    <!-- BAĞIMSIZ GÖRSEL DÜZENLEME STİLLERİ (FONKSİYONLARA ZARAR VERMEZ) -->
+    <style>
+      /* Alt barın genel yüksekliğini ve dikey boşluklarını sıfıra çekiyoruz */
+      #customPlayerBot {
+        padding: 2px 10px !important;
+      }
+      #customPlayerCtrls {
+        position: relative !important; 
+        padding-right: 0px !important; 
+        min-height: unset !important; 
+        height: auto !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+      .p-bar-integrated-btns {
+        display: flex !important; 
+        align-items: center !important; 
+        gap: 6px !important; 
+        margin-left: 5px !important; 
+        margin-right: 5px !important;
+      }
+      
+      /* Kategoriler alanını yazılarla sıfıra sıfır dikey hizaya çeker */
+      #sbCats {
+        display: flex !important; 
+        gap: 8px !important; 
+        padding: 0px !important; 
+        margin-left: 10px !important; 
+        margin-right: 10px !important; 
+        overflow-x: auto !important; 
+        flex: 1 !important; 
+        white-space: nowrap !important; 
+        align-items: center !important; 
+        min-height: unset !important; 
+        height: auto !important;
+      }
+      
+      /* JS element üretimini engellemeyecek saf görsel ezme kuralları */
+      #sbCats button, .sb-cats button, .cat-pill { 
+        padding: 2px 4px !important; 
+        margin: 0 !important;
+        height: auto !important; 
+        line-height: 1.1 !important;
+        border: none !important; 
+        background: transparent !important; 
+        border-radius: 0px !important;
+        font-size: 11px !important;
+        color: #ffffff !important; 
+        opacity: 0.6 !important; 
+        transition: opacity 0.1s;
+      }
+      
+      /* Seçili veya hover olunan kategori görünümü */
+      #sbCats button.on, .sb-cats button.on, .cat-pill.on,
+      #sbCats button:hover, .sb-cats button:hover {
+        opacity: 1 !important;
+        font-weight: 700 !important;
+        background: transparent !important;
+        text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+      }
+      #sbCats span, #sbCats a { 
+        color: #ffffff !important; 
+        opacity: 1 !important;
+      }
+    </style>
     
     <div class="ad-leader" id="adLeader" onclick="adLeaderClick()">
       <span class="ad-tag">REKLAM</span>
