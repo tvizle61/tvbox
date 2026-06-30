@@ -1164,7 +1164,7 @@ input,select{font-family:var(--fb);}
               <span class="vol-pct" id="volPct">100%</span>
             </div>
             
-            <!-- OTO ÇÖZÜNÜRLÜK (Görünmez yapıldı) -->
+            <!-- OTO ÇÖZÜNÜRLÜK (Görünmez yapıldı, kod yapısı bozulmasın diye silinmedi) -->
             <div class="p-qual-wrap" style="display: none !important;">
               <button class="p-qual-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><span id="qualLabel">OTO</span></button>
               <div class="p-qual-drop">
@@ -1176,7 +1176,7 @@ input,select{font-family:var(--fb);}
               </div>
             </div>
 
-            <!-- ESKİ BOTONLAR (Görünmez yapıldı) -->
+            <!-- ESKİ BUTONLAR (Görünmez yapıldı, admin paneliyle çakışmayı önler) -->
             <button class="btn btn-g" onclick="openModal('addChModal')" style="display: none !important;">+ KANAL</button>
             <button class="btn btn-g" onclick="openModal('m3uModal')" style="display: none !important;">M3U YÜKLE</button>
             
@@ -1190,8 +1190,8 @@ input,select{font-family:var(--fb);}
               </style>
             </div>
             
-            <!-- SAAT VE CANLI ALANI (EN SAĞA YASLI) -->
-            <span class="p-time" id="pTime" style="margin-left: auto; white-space: nowrap;">🔴 CANLI</span>
+            <!-- SAAT VE CANLI ALANI (EN SAĞA TAM YAPIŞTIRILDI) -->
+            <span class="p-time" id="pTime" style="margin-left: auto; padding-right: 15px; white-space: nowrap; flex-shrink: 0; display: inline-block;">🔴 CANLI</span>
           </div>
         </div>
       </div>
