@@ -1162,8 +1162,8 @@ input,select{font-family:var(--fb);}
 
   <div class="app-body">
 
-    <!-- SIDEBAR -->
-   <!-- ══ APP ══ -->
+   <!-- SIDEBAR -->
+<!-- ══ APP ══ -->
 <aside class="sidebar" id="sidebar">
   <div class="sb-search">
     <div class="sb-search-wrap">
@@ -1200,15 +1200,9 @@ input,select{font-family:var(--fb);}
       <div class="screenshot-flash" id="screenshotFlash"></div>
       <div class="auto-next-bar" id="autoNextBar"></div>
       <div class="p-ov" id="pOv">
-        <div class="p-ov-top">
-          <div class="p-ov-info">
-            <span class="p-live-badge">● CANLI</span>
-            <div>
-              <div class="p-ch-title" id="pTitle">—</div>
-              <div style="font-size:11px;color:rgba(255,255,255,.45)" id="pGrp"></div>
-            </div>
-          </div>
-        </div>
+        
+        <!-- ÜSTTEKİ CANLI VE KANAL İSMİ PANELİ TAMAMEN KALDIRILDI / GİZLENDİ -->
+        <div class="p-ov-top" style="display: none !important;"></div>
         
         <div class="p-ov-bot">
           <div class="p-prog"><div class="p-prog-fill"></div></div>
@@ -1246,10 +1240,29 @@ input,select{font-family:var(--fb);}
             <button class="btn btn-g" onclick="openModal('addChModal')" style="display: none !important;">+ KANAL</button>
             <button class="btn btn-g" onclick="openModal('m3uModal')" style="display: none !important;">M3U YÜKLE</button>
             
-            <!-- KATEGORİLER ALANI VE NOKTA ATIŞI BEYAZ YAZI STİLİ -->
-            <div class="sb-cats" id="sbCats" style="display: flex; gap: 5px; margin-left: 15px; margin-right: 0px; overflow-x: auto; flex: 1; white-space: nowrap;">
+            <!-- KATEGORİLER ALANI (SIFIRA SIFIR DARALTILDI VE BEYAZ YAPILDI) -->
+            <div class="sb-cats" id="sbCats" style="display: flex; gap: 4px; padding: 0px !important; margin-left: 10px; margin-right: 0px; overflow-x: auto; flex: 1; white-space: nowrap; align-items: center;">
               <style>
-                #sbCats button, #sbCats span, #sbCats a { 
+                /* Dinamik gelen butonların iç boşluğunu, kenarlığını sıfırlayıp saf yazı haline getirir */
+                #sbCats button, .sb-cats button, .cat-pill { 
+                  padding: 2px 4px !important; /* Yazının etrafındaki boşluk minimuma indi */
+                  margin: 0 !important;
+                  border: none !important; /* Buton çizgileri kaldırıldı */
+                  background: transparent !important; /* Arka plan temizlendi */
+                  font-size: 11px !important;
+                  color: #ffffff !important; 
+                  opacity: 0.8 !important; /* Pasifken hafif soft durur */
+                  transition: all 0.15s;
+                }
+                /* Aktif olan veya üzerine gelinen kategoriyi parlatır */
+                #sbCats button.on, .sb-cats button.on, .cat-pill.on,
+                #sbCats button:hover, .sb-cats button:hover {
+                  opacity: 1 !important;
+                  font-weight: 700 !important;
+                  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6) !important;
+                }
+                /* Diğer alt metin/link kombinasyonları için garanti beyazlık */
+                #sbCats span, #sbCats a { 
                   color: #ffffff !important; 
                   opacity: 1 !important;
                 }
@@ -1257,7 +1270,7 @@ input,select{font-family:var(--fb);}
             </div>
             
             <!-- SAAT VE CANLI ALANI (EN SAĞA ABSOLUTE İLE ÇAKILDI) -->
-            <span class="p-time" id="pTime" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); white-space: nowrap; flex-shrink: 0; display: inline-block;">🔴 CANLI</span>
+            <span class="p-time" id="pTime" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); white-space: nowrap; flex-shrink: 0; display: inline-block; color: #ffffff !important;">🔴 CANLI</span>
           </div>
         </div>
       </div>
