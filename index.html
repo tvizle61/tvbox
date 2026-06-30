@@ -153,13 +153,37 @@ input,select{font-family:var(--fb);}
 .app-body{flex:1;display:flex;overflow:hidden;}
 
 /* ══════════════════════════════════════════
-   SIDEBAR
+    SIDEBAR (DARALTILDI VE SCROLLBAR EKLENDİ)
 ══════════════════════════════════════════ */
-.sidebar{
-  width:var(--sw);flex-shrink:0;
-  background:var(--s1);border-right:1px solid var(--bd);
-  display:flex;flex-direction:column;overflow:hidden;
+:root {
+  --sw: 220px; /* Sidebar genişliği 280px/260px civarından 220px'e daraltıldı */
 }
+
+.sidebar {
+  width: var(--sw);
+  flex-shrink: 0;
+  background: var(--s1);
+  border-right: 1px solid var(--bd);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Kanal Listesinin Özelleştirilmiş Açık Renk Kaydırma Çubuğu */
+.ch-list::-webkit-scrollbar {
+  width: 6px; /* İdeal incelikte görünüm */
+}
+.ch-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03); /* Hafif belli olan arka plan */
+}
+.ch-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3); /* Açık renk, kendini belli eden çubuk */
+  border-radius: 10px;
+}
+.ch-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5); /* Üzerine gelindiğinde daha da parlasın */
+}
+
 .sb-search{padding:10px;border-bottom:1px solid var(--bd);}
 .sb-search input{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:8px 12px;color:var(--txt);font-size:13px;outline:none;transition:border-color .2s;}
 .sb-search input:focus{border-color:var(--acc);}
@@ -174,9 +198,10 @@ input,select{font-family:var(--fb);}
 .sb-sort:hover{color:var(--txt2);border-color:var(--bd2);}
 .ch-list{flex:1;overflow-y:auto;position:relative;padding:0 6px;}
 .ch-item{display:flex;align-items:center;gap:8px;padding:8px 8px;border-radius:var(--r);cursor:pointer;transition:background .15s;border:1px solid transparent;margin-bottom:2px;}
-.ch-item:hover{background:var(--s2);}
+.ch-item:hover {background:var(--s2);}
 .ch-item.on{background:rgba(0,212,255,.07);border-color:rgba(0,212,255,.25);}
-.ch-logo{width:38px;height:38px;border-radius:var(--r);flex-shrink:0;background:var(--s3);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:16px;overflow:hidden;}
+/* Kanal logoları daralan sidebar'a göre hafif küçültüldü */
+.ch-logo{width:32px;height:32px;border-radius:var(--r);flex-shrink:0;background:var(--s3);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:14px;overflow:hidden;}
 .ch-logo img{width:100%;height:100%;object-fit:contain;}
 .ch-meta{flex:1;min-width:0;}
 .ch-name{font-size:12px;font-weight:600;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -1003,10 +1028,10 @@ input,select{font-family:var(--fb);}
 .toast-ico{font-size:15px;flex-shrink:0;}
 
 /* ══════════════════════════════════════════
-   RESPONSIVE
+    RESPONSIVE (UYUMLULUK AYARLARI)
 ══════════════════════════════════════════ */
 @media(max-width:900px){
-  :root{--sw:240px;}
+  :root{--sw:200px;} /* Küçük ekranlarda biraz daha daralır */
   .hdr-clock{display:none;}
 }
 @media(max-width:700px){
