@@ -1151,7 +1151,15 @@ input,select{font-family:var(--fb);}
               <button class="pcb p-bar-btn" onclick="doFS()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:26px; height:26px;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
             </div>
             
-            <div class="p-qual-wrap">
+            <!-- SES KONTROLÜ (Görünmez yapıldı, kod yapısı bozulmasın diye silinmedi) -->
+            <div class="vol-wrap" style="display: none !important;">
+              <button onclick="toggleMute()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+              <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setVol(this.value)">
+              <span class="vol-pct" id="volPct">100%</span>
+            </div>
+            
+            <!-- OTO ÇÖZÜNÜRLÜK (Görünmez yapıldı) -->
+            <div class="p-qual-wrap" style="display: none !important;">
               <button class="p-qual-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><span id="qualLabel">OTO</span></button>
               <div class="p-qual-drop">
                 <button class="p-qual-item on" onclick="setQual(-1)">Otomatik</button>
@@ -1162,10 +1170,21 @@ input,select{font-family:var(--fb);}
               </div>
             </div>
 
-            <!-- KATEGORİLER ALANI: GENİŞLİK KISITLAMASI KALDIRILDI VE TÜM EKRANA YAYILMASI SAĞLANDI -->
-            <div class="sb-cats" id="sbCats" style="display: flex; gap: 5px; margin-left: 15px; margin-right: 15px; overflow-x: auto; flex: 1; white-space: nowrap;"></div>
-
-            <!-- BOŞLUK ELEMANI KALDIRILDI VE SAAT ALANI DOĞRUDAN EN SAĞA YASLANDI -->
+            <!-- ESKİ BOTONLAR (Görünmez yapıldı) -->
+            <button class="btn btn-g" onclick="openModal('addChModal')" style="display: none !important;">+ KANAL</button>
+            <button class="btn btn-g" onclick="openModal('m3uModal')" style="display: none !important;">M3U YÜKLE</button>
+            
+            <!-- KATEGORİLER ALANI VE NOKTA ATIŞI BEYAZ YAZI STİLİ -->
+            <div class="sb-cats" id="sbCats" style="display: flex; gap: 5px; margin-left: 15px; margin-right: 15px; overflow-x: auto; flex: 1; white-space: nowrap;">
+              <style>
+                #sbCats button, #sbCats span, #sbCats a { 
+                  color: #ffffff !important; 
+                  opacity: 1 !important;
+                }
+              </style>
+            </div>
+            
+            <!-- SAAT VE CANLI ALANI (EN SAĞA YASLI) -->
             <span class="p-time" id="pTime" style="margin-left: auto; white-space: nowrap;">🔴 CANLI</span>
           </div>
         </div>
