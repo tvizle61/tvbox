@@ -1092,7 +1092,7 @@ input,select{font-family:var(--fb);}
   <div class="app-body">
 
     <!-- SIDEBAR -->
-    <!-- ══ APP ══ -->
+   <!-- ══ APP ══ -->
 <aside class="sidebar" id="sidebar">
   <div class="sb-search">
     <div class="sb-search-wrap">
@@ -1162,10 +1162,13 @@ input,select{font-family:var(--fb);}
               </div>
             </div>
 
-            <!-- KATEGORİLER ALANI: GENİŞLİK KISITLAMASI KALDIRILDI VE TÜM EKRANA YAYILMASI SAĞLANDI -->
-            <div class="sb-cats" id="sbCats" style="display: flex; gap: 5px; margin-left: 15px; margin-right: 15px; overflow-x: auto; flex: 1; white-space: nowrap;"></div>
+            <!-- BEYAZ YAZI STİLİ EKLENMİŞ GÜNCEL KATEGORİ ALANI -->
+            <div class="sb-cats" id="sbCats" style="display: flex; gap: 5px; margin-left: 15px; margin-right: 15px; overflow-x: auto; flex: 1; white-space: nowrap;">
+              <style>
+                #sbCats button, #sbCats a, #sbCats div, #sbCats span { color: #ffffff !important; opacity: 1 !important; }
+              </style>
+            </div>
 
-            <!-- BOŞLUK ELEMANI KALDIRILDI VE SAAT ALANI DOĞRUDAN EN SAĞA YASLANDI -->
             <span class="p-time" id="pTime" style="margin-left: auto; white-space: nowrap;">🔴 CANLI</span>
           </div>
         </div>
