@@ -1147,7 +1147,8 @@ input,select{font-family:var(--fb);}
         
         <div class="p-ov-bot">
           <div class="p-prog"><div class="p-prog-fill"></div></div>
-          <div class="p-ctrls">
+          <!-- SAATİN SAĞA SIFIRLANMASI İÇİN ANA TAŞIYICIYA POSITION: RELATIVE VE SAĞDAN BOŞLUK VERİLDİ -->
+          <div class="p-ctrls" style="position: relative; padding-right: 140px;">
             <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
               <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             </button>
@@ -1157,14 +1158,14 @@ input,select{font-family:var(--fb);}
               <button class="pcb p-bar-btn" onclick="doFS()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:26px; height:26px;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
             </div>
             
-            <!-- SES KONTROLÜ (Görünmez yapıldı, kod yapısı bozulmasın diye silinmedi) -->
+            <!-- SES KONTROLÜ (Görünmez) -->
             <div class="vol-wrap" style="display: none !important;">
               <button onclick="toggleMute()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
               <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setVol(this.value)">
               <span class="vol-pct" id="volPct">100%</span>
             </div>
             
-            <!-- OTO ÇÖZÜNÜRLÜK (Görünmez yapıldı, kod yapısı bozulmasın diye silinmedi) -->
+            <!-- OTO ÇÖZÜNÜRLÜK (Görünmez) -->
             <div class="p-qual-wrap" style="display: none !important;">
               <button class="p-qual-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><span id="qualLabel">OTO</span></button>
               <div class="p-qual-drop">
@@ -1176,12 +1177,12 @@ input,select{font-family:var(--fb);}
               </div>
             </div>
 
-            <!-- ESKİ BUTONLAR (Görünmez yapıldı, admin paneliyle çakışmayı önler) -->
+            <!-- ESKİ BUTONLAR (Görünmez) -->
             <button class="btn btn-g" onclick="openModal('addChModal')" style="display: none !important;">+ KANAL</button>
             <button class="btn btn-g" onclick="openModal('m3uModal')" style="display: none !important;">M3U YÜKLE</button>
             
             <!-- KATEGORİLER ALANI VE NOKTA ATIŞI BEYAZ YAZI STİLİ -->
-            <div class="sb-cats" id="sbCats" style="display: flex; gap: 5px; margin-left: 15px; margin-right: 15px; overflow-x: auto; flex: 1; white-space: nowrap;">
+            <div class="sb-cats" id="sbCats" style="display: flex; gap: 5px; margin-left: 15px; margin-right: 0px; overflow-x: auto; flex: 1; white-space: nowrap;">
               <style>
                 #sbCats button, #sbCats span, #sbCats a { 
                   color: #ffffff !important; 
@@ -1190,8 +1191,8 @@ input,select{font-family:var(--fb);}
               </style>
             </div>
             
-            <!-- SAAT VE CANLI ALANI (EN SAĞA TAM YAPIŞTIRILDI) -->
-            <span class="p-time" id="pTime" style="margin-left: auto; padding-right: 15px; white-space: nowrap; flex-shrink: 0; display: inline-block;">🔴 CANLI</span>
+            <!-- SAAT VE CANLI ALANI (EN SAĞA ABSOLUTE İLE ÇAKILDI) -->
+            <span class="p-time" id="pTime" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); white-space: nowrap; flex-shrink: 0; display: inline-block;">🔴 CANLI</span>
           </div>
         </div>
       </div>
