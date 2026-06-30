@@ -1098,7 +1098,7 @@ input,select{font-family:var(--fb);}
   <div class="app-body">
 
     <!-- SIDEBAR -->
-    <!-- ══ APP ══ -->
+   <!-- ══ APP ══ -->
 <aside class="sidebar" id="sidebar">
   <div class="sb-search">
     <div class="sb-search-wrap">
@@ -1122,28 +1122,21 @@ input,select{font-family:var(--fb);}
 <div class="main-panel">
 
   <div id="pageTv" class="sub-page on">
-    <div class="player-wrap" id="playerWrap" style="height: 100%; display: flex; flex-direction: column;">
-      
-      <!-- Video alanı yukarıya alındı ve alt barda boşluk kalmasın diye flex uygulandı -->
-      <div style="flex: 1; position: relative; width: 100%; min-height: 0;">
-        <video id="mainVid" playsinline style="width: 100% !important; height: 100% !important; object-fit: fill !important; background: #000;"></video>
-        
-        <div class="p-empty" id="pEmpty">
-          <div class="p-empty-icon">📡</div>
-          <h2>KANAL SEÇİN</h2>
-          <p>Sol listeden kanal seçerek izlemeye başlayın</p>
-        </div>
-        <div class="p-buf" id="pBuf"><div class="buf-ring"></div></div>
-        <div class="swipe-hint left" id="swipeLeft">⬅ Önceki</div>
-        <div class="swipe-hint right" id="swipeRight">Sonraki ➡</div>
-        <div class="screenshot-flash" id="screenshotFlash"></div>
-        <div class="auto-next-bar" id="autoNextBar"></div>
+    <div class="player-wrap" id="playerWrap">
+      <video id="mainVid" playsinline></video>
+      <div class="p-empty" id="pEmpty">
+        <div class="p-empty-icon">📡</div>
+        <h2>KANAL SEÇİN</h2>
+        <p>Sol listeden kanal seçerek izlemeye başlayın</p>
       </div>
-      
-      <!-- Kontrol ve Alt Kategori Barı (Sıfıra Sıfır Daraltıldı) -->
-      <div class="p-ov" id="pOv" style="position: relative; opacity: 1; pointer-events: auto; display: flex; flex-direction: column; background: #000;">
-        <div class="p-ov-top" style="position: absolute; top: 0; left: 0; width: 100%; z-index: 10; pointer-events: none; background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);">
-          <div class="p-ov-info" style="pointer-events: auto;">
+      <div class="p-buf" id="pBuf"><div class="buf-ring"></div></div>
+      <div class="swipe-hint left" id="swipeLeft">⬅ Önceki</div>
+      <div class="swipe-hint right" id="swipeRight">Sonraki ➡</div>
+      <div class="screenshot-flash" id="screenshotFlash"></div>
+      <div class="auto-next-bar" id="autoNextBar"></div>
+      <div class="p-ov" id="pOv">
+        <div class="p-ov-top">
+          <div class="p-ov-info">
             <span class="p-live-badge">● CANLI</span>
             <div>
               <div class="p-ch-title" id="pTitle">—</div>
@@ -1152,53 +1145,53 @@ input,select{font-family:var(--fb);}
           </div>
         </div>
         
-        <div class="p-ov-bot" style="background: #000; padding: 6px 12px;">
-          <div class="p-prog" style="margin-bottom: 6px;"><div class="p-prog-fill"></div></div>
-          <div class="p-ctrls" style="display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 10px;">
+        <div class="p-ov-bot">
+          <div class="p-prog"><div class="p-prog-fill"></div></div>
+          <div class="p-ctrls">
+            <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </button>
             
-            <!-- Sol Butonlar -->
-            <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
-              <button class="p-play-btn" onclick="togglePlay()" id="playBtn" style="width: 32px; height: 32px;">
-                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </button>
-              
-              <div class="p-bar-integrated-btns" style="display: flex; align-items: center; gap: 6px;">
-                <button class="pcb p-bar-btn" onclick="restartStream()" title="Yenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px; height:14px;"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg></button>
-                <button class="pcb p-bar-btn" onclick="doFS()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; height:20px;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
-              </div>
+            <div class="p-bar-integrated-btns" style="display: flex; align-items: center; gap: 6px; margin-left: 5px; margin-right: 5px;">
+              <button class="pcb p-bar-btn" onclick="restartStream()" title="Yenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px;"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.06"/></svg></button>
+              <button class="pcb p-bar-btn" onclick="doFS()" title="Tam Ekran"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:26px; height:26px;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
             </div>
             
-            <!-- Gerekli Gizli Elementler (JS Hata Vermesin Diye Tutuldu) -->
+            <!-- SES KONTROLÜ (Görünmez yapıldı, kod yapısı bozulmasın diye silinmedi) -->
             <div class="vol-wrap" style="display: none !important;">
-              <button onclick="toggleMute()"></button>
+              <button onclick="toggleMute()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
               <input class="vol-slider" type="range" min="0" max="100" value="100" oninput="setVol(this.value)">
               <span class="vol-pct" id="volPct">100%</span>
             </div>
+            
+            <!-- OTO ÇÖZÜNÜRLÜK (Görünmez yapıldı) -->
             <div class="p-qual-wrap" style="display: none !important;">
-              <button class="p-qual-btn"><span id="qualLabel">OTO</span></button>
+              <button class="p-qual-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg><span id="qualLabel">OTO</span></button>
               <div class="p-qual-drop">
                 <button class="p-qual-item on" onclick="setQual(-1)">Otomatik</button>
+                <button class="p-qual-item" onclick="setQual(1080)">1080p HD</button>
+                <button class="p-qual-item" onclick="setQual(720)">720p HD</button>
+                <button class="p-qual-item" onclick="setQual(480)">480p</button>
+                <button class="p-qual-item" onclick="setQual(360)">360p</button>
               </div>
             </div>
-            <button class="btn btn-g" onclick="openModal('addChModal')" style="display: none !important;"></button>
-            <button class="btn btn-g" onclick="openModal('m3uModal')" style="display: none !important;"></button>
+
+            <!-- ESKİ BOTONLAR (Görünmez yapıldı) -->
+            <button class="btn btn-g" onclick="openModal('addChModal')" style="display: none !important;">+ KANAL</button>
+            <button class="btn btn-g" onclick="openModal('m3uModal')" style="display: none !important;">M3U YÜKLE</button>
             
-            <!-- Orta Kategori Alanı (YAZILAR AGRESİF ŞEKİLDE PARLAK BEYAZ YAPILDI) -->
-            <div class="sb-cats" id="sbCats" style="display: flex; gap: 5px; overflow-x: auto; flex: 1; white-space: nowrap; padding: 2px 0;">
+            <!-- KATEGORİLER ALANI VE NOKTA ATIŞI BEYAZ YAZI STİLİ -->
+            <div class="sb-cats" id="sbCats" style="display: flex; gap: 5px; margin-left: 15px; margin-right: 15px; overflow-x: auto; flex: 1; white-space: nowrap;">
               <style>
-                #sbCats, .sb-cats { color: #ffffff !important; }
-                #sbCats button, #sbCats span, #sbCats a, .sb-cats button, .sb-cats span { 
+                #sbCats button, #sbCats span, #sbCats a { 
                   color: #ffffff !important; 
                   opacity: 1 !important;
-                  font-weight: 600 !important;
                 }
               </style>
             </div>
             
-            <!-- Sağ Taraf: SAAT VE CANLI (TAM SAĞA YASLANDI) -->
-            <div style="margin-left: auto; flex-shrink: 0; display: flex; align-items: center;">
-              <span class="p-time" id="pTime" style="white-space: nowrap; color: #ffffff !important; opacity: 1 !important;">🔴 CANLI</span>
-            </div>
+            <!-- SAAT VE CANLI ALANI (EN SAĞA YASLI) -->
+            <span class="p-time" id="pTime" style="margin-left: auto; white-space: nowrap;">🔴 CANLI</span>
           </div>
         </div>
       </div>
