@@ -1167,7 +1167,7 @@ input,select{font-family:var(--fb);}
 <aside class="sidebar" id="sidebar">
   <div class="sb-search">
     <div class="sb-search-wrap">
-     
+      <input type="text" id="sbSearch" placeholder="🔍 Kanal ara…" oninput="debRender();showSearchHist()" onfocus="showSearchHist()" onblur="setTimeout(hideSearchHist,200)">
       <div class="search-hist" id="searchHist"></div>
     </div>
   </div>
