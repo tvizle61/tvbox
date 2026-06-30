@@ -1156,7 +1156,6 @@ input,select{font-family:var(--fb);}
   <div class="app-body">
 
     <!-- SIDEBAR -->
-<!-- SIDEBAR -->
 <!-- ══ APP ══ -->
 <aside class="sidebar" id="sidebar">
   <div class="sb-search">
@@ -1166,8 +1165,7 @@ input,select{font-family:var(--fb);}
     </div>
   </div>
   
-  <!-- ARKA PLAN FONKSİYONLARININ BOZULMAMASI İÇİN ORİJİNAL KATEGORİ ALANI (GİZLİ TUTULDU) -->
-  <div id="sbCats" style="display: none !important;"></div>
+  <!-- KATEGORİLER BURADAN TAMAMEN KALDIRILDI, PLAYER ALTINA ORİJİNAL KİMLİĞİYLE TAŞINDI -->
   
   <div class="sb-info">
     <span id="sbCount">Yükleniyor…</span>
@@ -1210,8 +1208,7 @@ input,select{font-family:var(--fb);}
         <div class="p-ov-bot" style="padding: 2px 10px !important;">
           <div class="p-prog"><div class="p-prog-fill"></div></div>
           
-          <!-- SAAT ALANI ARTIK OLMADIĞI İÇİN SAĞ PADDING DEĞERİNİ SIFIRLADIK VE KATEGORİLER İÇİN GENİŞ ALAN AÇTIK -->
-          <div class="p-ctrls" style="position: relative; padding-right: 0px !important; display: flex; align-items: center; min-height: unset !important; height: auto !important;">
+          <div class="p-ctrls" style="position: relative; padding-right: 0px !important; display: flex; align-items: center;">
             <button class="p-play-btn" onclick="togglePlay()" id="playBtn">
               <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             </button>
@@ -1244,28 +1241,34 @@ input,select{font-family:var(--fb);}
             <button class="btn btn-g" onclick="openModal('addChModal')" style="display: none !important;">+ KANAL</button>
             <button class="btn btn-g" onclick="openModal('m3uModal')" style="display: none !important;">M3U YÜKLE</button>
             
-            <!-- OYUNCU BARINDAKİ YENİ KATEGORİ ALANI (GÖRSEL SIFIRLAMA) -->
-            <div class="p-player-cats" id="playerCatsContainer" style="display: flex; gap: 8px; margin-left: 15px; margin-right: 5px; overflow-x: auto; flex: 1; white-space: nowrap; align-items: center; min-height: unset !important; height: auto !important;">
-              <!-- Butonlar sistem çalışınca JS ile buraya da kopyalanacak. Alt stiller dikey yüksekliği sıfırlamak içindir -->
+            <!-- ORİJİNAL KATEGORİ ALANI BURAYA GELDİ (ID DEĞİŞMEDİ, JS ASLA KIRILMAZ) -->
+            <div class="sb-cats" id="sbCats" style="display: flex; gap: 8px; margin-left: 15px; margin-right: 5px; overflow-x: auto; flex: 1; white-space: nowrap; align-items: center; border-bottom: none !important; padding: 0 !important;">
+              <!-- CSS ezme kuralları ile butonların dikeyde taşmasını engelliyoruz -->
               <style>
-                .p-player-cats::-webkit-scrollbar { height: 0px !important; }
-                .p-player-cats button, .p-player-cats .cat-pill { 
-                  padding: 2px 4px !important; 
+                #sbCats::-webkit-scrollbar { height: 0px !important; }
+                #sbCats button, #sbCats .cat-pill { 
+                  padding: 2px 5px !important; 
                   margin: 0 !important;
                   height: auto !important; 
-                  line-height: 1.1 !important;
+                  line-height: 1.2 !important;
                   border: none !important; 
                   background: transparent !important; 
                   font-size: 11px !important;
                   color: #ffffff !important; 
                   opacity: 0.6 !important; 
-                  transition: opacity 0.1s;
+                  transition: all 0.15s;
                   cursor: pointer;
+                  flex-shrink: 0;
+                  border-radius: 4px !important;
                 }
-                .p-player-cats button.on, .p-player-cats .cat-pill.on,
-                .p-player-cats button:hover {
+                #sbCats button.on, #sbCats .cat-pill.on {
                   opacity: 1 !important;
                   font-weight: 700 !important;
+                  background: rgba(0, 212, 255, 0.2) !important; /* Seçili kategori arka planı hafif parlasın */
+                  color: #00d4ff !important;
+                }
+                #sbCats button:hover, #sbCats .cat-pill:hover {
+                  opacity: 1 !important;
                 }
               </style>
             </div>
